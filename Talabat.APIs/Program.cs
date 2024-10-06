@@ -1,4 +1,8 @@
 
+using Microsoft.EntityFrameworkCore;
+using Talabat.Infrastructure.Persistence;
+using Talabat.Infrastructure.Persistence.Data;
+
 namespace Talabat.APIs
 {
 	public class Program
@@ -13,7 +17,8 @@ namespace Talabat.APIs
 			// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 			builder.Services.AddEndpointsApiExplorer();
 			builder.Services.AddSwaggerGen();
-
+			builder.Services.AddPersistenceServices(builder.Configuration);
+			
 			var app = builder.Build();
 
 			// Configure the HTTP request pipeline.
