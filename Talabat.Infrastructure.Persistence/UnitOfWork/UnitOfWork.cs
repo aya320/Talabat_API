@@ -10,15 +10,18 @@ using Talabat.Core.Domain.Entities.Products;
 using Talabat.Infrastructure.Persistence.Data;
 using Talabat.Infrastructure.Persistence.Repositories;
 using Talabat.Core.Domain.Common;
+using System.Collections.Concurrent;
 
 namespace Talabat.Infrastructure.Persistence.UnitOfWork
 {
 	public class UnitOfWork : IUnitOfWork
 	{
 		private readonly StoreContext _dbContext;
+		private readonly ConcurrentDictionary<string, object> _Repositories;
 		public UnitOfWork(StoreContext dbContext)
 		{
 			_dbContext = dbContext;
+			_Repositories = new ConcurrentDictionary<string, object>();
 
 		}
 
@@ -30,7 +33,14 @@ namespace Talabat.Infrastructure.Persistence.UnitOfWork
 			where TEntity : BaseEntity<TKey>
 			where TKey : IEquatable<TKey>
 		{
-			throw new NotImplementedException();
+			//var TypeName= typeof(TEntity).Name;
+			//if (_Repositories.ContainsKey(TypeName)) return (IGenericRepository<TEntity, TKey>) _Repositories[TypeName];
+
+			//var repository = new GenericRepository<TEntity, TKey>(_dbContext);
+			//_Repositories.Add(TypeName, repository);
+			//return repository;
+
+			return (IGenericRepository<TEntity, TKey>) _Repositories.GetOrAdd(typeof(TEntity).Name, new GenericRepository<TEntity, TKey>(_dbContext));
 		}
 	}
 }
