@@ -21,9 +21,9 @@ namespace Talabat.Infrastructure.Persistence.Data
 			//modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 			modelBuilder.ApplyConfigurationsFromAssembly(typeof(AssemblyInformation).Assembly);
 		}
-		DbSet<Product> Products { get; set; }
-		DbSet<ProductCategory> Categories { get; set; }
-		DbSet<ProductBrand> Brands { get; set; }
+		public DbSet<Product> Products { get; set; }
+		public DbSet<ProductCategory> Categories { get; set; }
+		public DbSet<ProductBrand> Brands { get; set; }
 
 
 	}

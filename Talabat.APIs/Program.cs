@@ -33,11 +33,12 @@ namespace Talabat.APIs
 				var PendingMigrations = dbcontext.Database.GetPendingMigrations();
 				if(PendingMigrations.Any())
 				    await dbcontext.Database.MigrateAsync();
+				await StoreContextSeed.SeedAsync(dbcontext);
 			}
 			catch(Exception ex)
 			{
 				var logger = LoggerFactory.CreateLogger<Program>();
-				logger.LogError(ex, "Error Has Been Occured During Applying Migrations");
+				logger.LogError(ex, "Error Has Been Occured During Applying Migrations Or Data Seeding");
 			}
 			
 
