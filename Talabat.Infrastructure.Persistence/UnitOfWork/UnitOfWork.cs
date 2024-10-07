@@ -9,41 +9,26 @@ using Talabat.Core.Domain.Contracts;
 using Talabat.Core.Domain.Entities.Products;
 using Talabat.Infrastructure.Persistence.Data;
 using Talabat.Infrastructure.Persistence.Repositories;
+using Talabat.Core.Domain.Common;
 
 namespace Talabat.Infrastructure.Persistence.UnitOfWork
 {
 	public class UnitOfWork : IUnitOfWork
 	{
-
 		private readonly StoreContext _dbContext;
-
-        private readonly Lazy<IGenericRepository<Product, int>> _productRepository;
-
-		private readonly Lazy<IGenericRepository<ProductBrand, int>> _brandRepository;
-
-		private readonly Lazy<IGenericRepository <ProductCategory, int>> _categoryRepository;
-
 		public UnitOfWork(StoreContext dbContext)
 		{
 			_dbContext = dbContext;
 
-			_productRepository = new Lazy<IGenericRepository<Product, int>>(() => new GenericRepository<Product, int>(_dbContext));
-			_brandRepository = new Lazy<IGenericRepository<ProductBrand, int>>(() => new GenericRepository<ProductBrand, int>(_dbContext));
-			_categoryRepository = new Lazy<IGenericRepository<ProductCategory, int>>(() => new GenericRepository<ProductCategory, int>(_dbContext));
-
 		}
 
+		public async Task<int> CompleteAsync()=>await _dbContext.SaveChangesAsync();
 
-        public IGenericRepository<Product, int> Products => _productRepository.Value;
-		public IGenericRepository<ProductBrand, int> ProductBrands => _brandRepository.Value;
-		public IGenericRepository<ProductCategory, int> ProductCategories => _categoryRepository.Value;
+		public async ValueTask DisposeAsync()=> await _dbContext.DisposeAsync();
 
-		public Task<int> CompleteAsync()
-		{
-			throw new NotImplementedException();
-		}
-
-		public ValueTask DisposeAsync()
+		public IGenericRepository<TEntity, TKey> GetRepository<TEntity, TKey>()
+			where TEntity : BaseEntity<TKey>
+			where TKey : IEquatable<TKey>
 		{
 			throw new NotImplementedException();
 		}
