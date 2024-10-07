@@ -1,32 +1,43 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Talabat.Core.Domain.Contracts;
 using Talabat.Core.Domain.Entities.Products;
 using Talabat.Infrastructure.Persistence.Data;
 
 namespace Talabat.Infrastructure.Persistence
 {
-	public static class StoreContextSeed
+	internal class StoreContextInitializer(StoreContext _dbContext) : IStoreContextInitializer
 	{
-		public static async Task SeedAsync(StoreContext dbContext)
+		
+
+		public async Task InitializeAsync()
 		{
-			if (!dbContext.Brands.Any())
+			var PendingMigrations = await _dbContext.Database.GetPendingMigrationsAsync();
+			if (PendingMigrations.Any())
+				await _dbContext.Database.MigrateAsync();  //Update Database
+		}
+
+		public async Task SeedAsync()
+		{
+			if (!_dbContext.Brands.Any())
 			{
 				var BrandsData = await File.ReadAllTextAsync("../Talabat.Infrastructure.Persistence\\Data\\Seeds\\brands.json");
 				var brands = JsonSerializer.Deserialize<List<ProductBrand>>(BrandsData);
 
 				if (brands?.Count > 0)
 				{
-					await dbContext.Brands.AddRangeAsync(brands);
-					await dbContext.SaveChangesAsync();
+					await _dbContext.Brands.AddRangeAsync(brands);
+					await _dbContext.SaveChangesAsync();
 				}
 
 			}
 
-			if (!dbContext.Categories.Any())
+			if (!_dbContext.Categories.Any())
 			{
 
 				var CategoriesData = await File.ReadAllTextAsync("../Talabat.Infrastructure.Persistence\\Data\\Seeds\\categories.json");
@@ -34,13 +45,13 @@ namespace Talabat.Infrastructure.Persistence
 
 				if (categories?.Count > 0)
 				{
-					await dbContext.Set<ProductCategory>().AddRangeAsync(categories);
-					await dbContext.SaveChangesAsync();
+					await _dbContext.Set<ProductCategory>().AddRangeAsync(categories);
+					await _dbContext.SaveChangesAsync();
 				}
 
 			}
 
-			if (!dbContext.Products.Any())
+			if (!_dbContext.Products.Any())
 			{
 
 				var ProductsData = await File.ReadAllTextAsync("../Talabat.Infrastructure.Persistence\\Data\\Seeds\\products.json");
@@ -48,8 +59,8 @@ namespace Talabat.Infrastructure.Persistence
 
 				if (products?.Count > 0)
 				{
-					await dbContext.Set<Product>().AddRangeAsync(products);
-					await dbContext.SaveChangesAsync();
+					await _dbContext.Set<Product>().AddRangeAsync(products);
+					await _dbContext.SaveChangesAsync();
 				}
 			}
 		}

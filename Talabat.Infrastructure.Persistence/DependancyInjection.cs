@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Talabat.Core.Domain.Contracts;
 using Talabat.Infrastructure.Persistence.Data;
 
 namespace Talabat.Infrastructure.Persistence
@@ -19,6 +20,9 @@ namespace Talabat.Infrastructure.Persistence
 				options.UseSqlServer(Configuration.GetConnectionString("StoreContext"));
 
 			});
+			//services.AddScoped<IStoreContextInitializer, StoreContextInitializer>();
+			services.AddScoped(typeof (IStoreContextInitializer),typeof (StoreContextInitializer));
+
 			return services;
 		}
 	}

@@ -1,6 +1,8 @@
 
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Talabat.APIs.Extentions;
+using Talabat.Core.Domain.Contracts;
 using Talabat.Infrastructure.Persistence;
 using Talabat.Infrastructure.Persistence.Data;
 
@@ -24,23 +26,12 @@ namespace Talabat.APIs
 			
 			var app = builder.Build();
 
-			using var Scope = app.Services.CreateAsyncScope();
-			var Services =Scope.ServiceProvider;
-			var dbcontext = Services.GetRequiredService<StoreContext>();
-			var LoggerFactory= Services.GetRequiredService<ILoggerFactory>();
-			try
-			{
-				var PendingMigrations = dbcontext.Database.GetPendingMigrations();
-				if(PendingMigrations.Any())
-				    await dbcontext.Database.MigrateAsync();
-				await StoreContextSeed.SeedAsync(dbcontext);
-			}
-			catch(Exception ex)
-			{
-				var logger = LoggerFactory.CreateLogger<Program>();
-				logger.LogError(ex, "Error Has Been Occured During Applying Migrations Or Data Seeding");
-			}
-			
+			#region  Databases Initialization
+
+
+			//await InitializerExtentions.StoreContextInitializerAsync(app);
+			await app.StoreContextInitializerAsync(); 
+			#endregion
 
 			// Configure the HTTP request pipeline.
 			if (app.Environment.IsDevelopment())
