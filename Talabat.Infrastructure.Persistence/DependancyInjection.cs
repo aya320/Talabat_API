@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -8,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Talabat.Core.Domain.Contracts;
 using Talabat.Infrastructure.Persistence.Data;
+using Talabat.Infrastructure.Persistence.Data.Interceptors;
 
 namespace Talabat.Infrastructure.Persistence
 {
@@ -22,6 +24,8 @@ namespace Talabat.Infrastructure.Persistence
 			});
 			//services.AddScoped<IStoreContextInitializer, StoreContextInitializer>();
 			services.AddScoped(typeof (IStoreContextInitializer),typeof (StoreContextInitializer));
+			
+			services.AddScoped(typeof (ISaveChangesInterceptor),typeof (CustomSaveChangesInterceptors));
 
 			return services;
 		}
