@@ -10,7 +10,7 @@ using Talabat.Infrastructure.Persistence.Data;
 
 namespace Talabat.Infrastructure.Persistence.Repositories
 {
-	public class GenericRepository<TEntity, TKey> : IGenericRepository<TEntity, TKey> where TEntity : BaseEntity<TKey> where TKey : IEquatable<TKey>
+	public class GenericRepository<TEntity, TKey> : IGenericRepository<TEntity, TKey> where TEntity : BaseAuditableEntity<TKey> where TKey : IEquatable<TKey>
 	{
         
 		private readonly StoreContext _storecontext;
