@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Talabat.APIs.Extentions;
 using Talabat.APIs.Services;
+using Talabat.Core.Application;
 using Talabat.Core.Application.Abstraction;
 using Talabat.Core.Domain.Contracts;
 using Talabat.Infrastructure.Persistence;
@@ -27,7 +28,9 @@ namespace Talabat.APIs
 			builder.Services.AddScoped(typeof(ILoggedInUserService),typeof(LoggedInUserService));
 			builder.Services.AddHttpContextAccessor();
 			builder.Services.AddPersistenceServices(builder.Configuration);
+			builder.Services.AddApplicationService();
 			
+
 			var app = builder.Build();
 
 			#region  Databases Initialization

@@ -20,7 +20,7 @@ namespace Talabat.Infrastructure.Persistence
 		{
 			services.AddDbContext<StoreContext>((options) =>
 			{
-				options.UseSqlServer(Configuration.GetConnectionString("StoreContext"));
+				options.UseLazyLoadingProxies().UseSqlServer(Configuration.GetConnectionString("StoreContext"));
 
 			});
 			//services.AddScoped<IStoreContextInitializer, StoreContextInitializer>();
