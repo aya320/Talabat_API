@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Talabat.Core.Domain.Contracts;
 using Talabat.Infrastructure.Persistence.Data;
 using Talabat.Infrastructure.Persistence.Data.Interceptors;
+using Talabat.Infrastructure.Persistence.UnitOfWork;
 
 namespace Talabat.Infrastructure.Persistence
 {
@@ -26,6 +27,8 @@ namespace Talabat.Infrastructure.Persistence
 			services.AddScoped(typeof (IStoreContextInitializer),typeof (StoreContextInitializer));
 			
 			services.AddScoped(typeof (ISaveChangesInterceptor),typeof (CustomSaveChangesInterceptors));
+			services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork.UnitOfWork));
+
 
 			return services;
 		}
