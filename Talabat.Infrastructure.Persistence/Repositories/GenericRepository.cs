@@ -48,8 +48,16 @@ namespace Talabat.Infrastructure.Persistence.Repositories
 
 		}
 
-		public async Task<TEntity?> GetAsync(TKey Id)=> await _storecontext.Set<TEntity>().FindAsync(Id);
-			
+		public async Task<TEntity?> GetAsync(TKey Id)
+		{
+			if (typeof(TEntity) == typeof(Product))
+			   return	await _storecontext.Set<Product>().Where(a => a.Id.Equals( Id)).Include(P => P.Brand).Include(c => c.Category).FirstOrDefaultAsync() as TEntity ;
+			return await _storecontext.Set<TEntity>().FindAsync(Id);
+
+		}
+
+		//=> await _storecontext.Set<TEntity>().FindAsync(Id);
+
 		public void Update(TEntity Entity) => _storecontext.Set<TEntity>().Update(Entity);
 		
 	}
