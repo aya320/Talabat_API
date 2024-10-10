@@ -28,5 +28,21 @@ namespace Talabat.APIs.Controllers.Controllers.Products
 
 			return Ok(Product);
 		}
+
+		[HttpGet("brands")]
+		public async Task<ActionResult<IEnumerable<BrandDto>>> GetBrands()
+		{
+			var brands = await _serviceManager.ProductService.GetBrandsAsync();
+			return Ok(brands);
+		}
+
+		[HttpGet("categories")] 
+		public async Task<ActionResult<IEnumerable<CategoryDto>>> GetCategories()
+		{
+			var categories = await _serviceManager.ProductService.GetCategoriesAsync();
+			return Ok(categories);
+		}
+
+
 	}
 }
