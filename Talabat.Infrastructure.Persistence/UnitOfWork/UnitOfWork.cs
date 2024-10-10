@@ -41,7 +41,7 @@ namespace Talabat.Infrastructure.Persistence.UnitOfWork
 			//_Repositories.Add(TypeName, repository);
 			//return repository;
 
-			return (IGenericRepository<TEntity, TKey>) _Repositories.GetOrAdd(typeof(TEntity).Name, new GenericRepository<TEntity, TKey>(_dbContext));
+			return (IGenericRepository<TEntity, TKey>) _Repositories.GetOrAdd(typeof(TEntity).Name, new  GenericRepository<TEntity, TKey>(_dbContext));
 		}
 	}
 }

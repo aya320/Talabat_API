@@ -12,9 +12,21 @@ namespace Talabat.Core.Domain.Specifications.Products
 	{
         public ProductWithBrandAndCategorySpecfications():base()
         {
-            Includes.Add(b => b.Brand!);
-			Includes.Add(c => c.Category!);
+			AddIncludes();
 
+
+		}
+
+		public ProductWithBrandAndCategorySpecfications(int Id) : base(Id)
+		{
+			AddIncludes();
+
+		}
+
+		private void AddIncludes()
+		{
+			Includes.Add(b => b.Brand!);
+			Includes.Add(c => c.Category!);
 		}
 
 	}
