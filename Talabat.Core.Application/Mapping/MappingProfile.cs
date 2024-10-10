@@ -15,9 +15,11 @@ namespace Talabat.Core.Application.Mapping
         {
             CreateMap<Product,ProductToReturnDto>()
                 .ForMember(b=>b.Brand,o=>o.MapFrom(src=>src.Brand!.Name))
-                .ForMember(c=>c.Category,o=>o.MapFrom(src=>src.Category!.Name));
+                .ForMember(c=>c.Category,o=>o.MapFrom(src=>src.Category!.Name))
+                .ForMember(c=>c.PictureUrl,o=>o.MapFrom<ProductPictureUrlResolver>());
+			
 
-            CreateMap<ProductBrand, BrandDto>();
+			CreateMap<ProductBrand, BrandDto>();
             CreateMap<ProductCategory, CategoryDto>();
 
 
