@@ -5,13 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Talabat.Core.Domain.Contracts;
+using Talabat.Core.Domain.Contracts.Persistence;
 using Talabat.Core.Domain.Entities.Products;
 using Talabat.Infrastructure.Persistence.Data;
 
 namespace Talabat.Infrastructure.Persistence
 {
-	internal class StoreContextInitializer(StoreContext _dbContext) : IStoreContextInitializer
+    internal class StoreContextInitializer(StoreContext _dbContext) : IStoreContextInitializer
 	{
 		
 

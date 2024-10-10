@@ -7,14 +7,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Talabat.Core.Domain.Contracts;
+using Talabat.Core.Domain.Contracts.Persistence;
 using Talabat.Infrastructure.Persistence.Data;
 using Talabat.Infrastructure.Persistence.Data.Interceptors;
 using Talabat.Infrastructure.Persistence.UnitOfWork;
 
 namespace Talabat.Infrastructure.Persistence
 {
-	public static class DependancyInjection
+    public static class DependancyInjection
 	{
 		public static IServiceCollection AddPersistenceServices(this IServiceCollection services ,IConfiguration Configuration)
 		{

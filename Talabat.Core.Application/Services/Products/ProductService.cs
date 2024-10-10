@@ -6,8 +6,10 @@ using System.Text;
 using System.Threading.Tasks;
 using Talabat.Core.Application.Abstraction.Models.Products;
 using Talabat.Core.Application.Abstraction.Services.Products;
-using Talabat.Core.Domain.Contracts;
+using Talabat.Core.Domain.Contracts.Persistence;
 using Talabat.Core.Domain.Entities.Products;
+using Talabat.Core.Domain.Specifications;
+using Talabat.Core.Domain.Specifications.Products;
 
 namespace Talabat.Core.Application.Services.Products
 {
@@ -16,14 +18,19 @@ namespace Talabat.Core.Application.Services.Products
 
 		public async Task<IEnumerable<ProductToReturnDto>> GetProductsAsync()
 		{
-			var Products=await _unitOfWork.GetRepository<Product,int>().GetAllAsync();
+			var spec = new ProductWithBrandAndCategorySpecfications();
+			
+
+			var Products =await _unitOfWork.GetRepository<Product,int>().GetAllWithSpecAsync(spec);
 			var ProductToReturn = _mapper.Map<IEnumerable<ProductToReturnDto>>(Products);
 			return ProductToReturn;
 		}
 
 		public async Task<ProductToReturnDto> GetProductAsync(int Id)
 		{
-			var Product = await _unitOfWork.GetRepository<Product, int>().GetAsync(Id);
+			var spec = new ProductWithBrandAndCategorySpecfications();
+
+			var Product = await _unitOfWork.GetRepository<Product, int>().GetWithSpecAsync(spec);
 			var ProductToReturn=_mapper.Map<ProductToReturnDto>(Product);
 			return ProductToReturn;
 
