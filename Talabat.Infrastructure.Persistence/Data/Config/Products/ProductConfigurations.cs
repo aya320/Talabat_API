@@ -10,7 +10,7 @@ using Talabat.Infrastructure.Persistence.Data.Config.Common;
 
 namespace Talabat.Infrastructure.Persistence.Data.Config.Products
 {
-	public class ProductConfigurations :BaseEntityConfigurations<Product,int>
+	public class ProductConfigurations :BaseAuditableEntityConfigurations<Product,int>
 	{
 		public override void Configure(EntityTypeBuilder<Product> builder)
 		{

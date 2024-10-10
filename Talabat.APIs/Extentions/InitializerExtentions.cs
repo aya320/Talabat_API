@@ -1,8 +1,8 @@
-﻿using Talabat.Core.Domain.Contracts;
+﻿using Talabat.Core.Domain.Contracts.Persistence;
 
 namespace Talabat.APIs.Extentions
 {
-	public static class InitializerExtentions
+    public static class InitializerExtentions
 	{
 		public static async Task<WebApplication> StoreContextInitializerAsync(this WebApplication app)
 		{

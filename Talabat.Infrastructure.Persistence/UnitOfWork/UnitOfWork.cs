@@ -5,16 +5,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Talabat.Core.Domain.Contracts;
 using Talabat.Core.Domain.Entities.Products;
 using Talabat.Infrastructure.Persistence.Data;
 using Talabat.Infrastructure.Persistence.Repositories;
 using Talabat.Core.Domain.Common;
 using System.Collections.Concurrent;
+using Talabat.Core.Domain.Contracts.Persistence;
+using Talabat.Infrastructure.Persistence.Repositories.GenericRepositories;
 
 namespace Talabat.Infrastructure.Persistence.UnitOfWork
 {
-	public class UnitOfWork : IUnitOfWork
+    public class UnitOfWork : IUnitOfWork
 	{
 		private readonly StoreContext _dbContext;
 		private readonly ConcurrentDictionary<string, object> _Repositories;
@@ -30,7 +31,7 @@ namespace Talabat.Infrastructure.Persistence.UnitOfWork
 		public async ValueTask DisposeAsync()=> await _dbContext.DisposeAsync();
 
 		public IGenericRepository<TEntity, TKey> GetRepository<TEntity, TKey>()
-			where TEntity : BaseAuditableEntity<TKey>
+			where TEntity : BaseEntity<TKey>
 			where TKey : IEquatable<TKey>
 		{
 			//var TypeName= typeof(TEntity).Name;
@@ -40,7 +41,7 @@ namespace Talabat.Infrastructure.Persistence.UnitOfWork
 			//_Repositories.Add(TypeName, repository);
 			//return repository;
 
-			return (IGenericRepository<TEntity, TKey>) _Repositories.GetOrAdd(typeof(TEntity).Name, new GenericRepository<TEntity, TKey>(_dbContext));
+			return (IGenericRepository<TEntity, TKey>) _Repositories.GetOrAdd(typeof(TEntity).Name, new  GenericRepository<TEntity, TKey>(_dbContext));
 		}
 	}
 }

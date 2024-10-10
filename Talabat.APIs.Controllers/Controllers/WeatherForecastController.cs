@@ -1,10 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using Talabat.APIs.Controllers.Base;
 
 namespace Talabat.APIs.Controllers
 {
-	[ApiController]
-	[Route("[controller]")]
-	public class WeatherForecastController : ControllerBase
+
+	public class WeatherForecastController : BaseAPIController
 	{
 		private static readonly string[] Summaries = new[]
 		{
