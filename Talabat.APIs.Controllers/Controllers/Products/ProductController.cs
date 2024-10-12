@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Talabat.APIs.Controllers.Base;
+using Talabat.Core.Application.Abstraction.Common;
 using Talabat.Core.Application.Abstraction.Models.Products;
 using Talabat.Core.Application.Abstraction.Services;
 
@@ -13,7 +14,7 @@ namespace Talabat.APIs.Controllers.Controllers.Products
 	public class ProductController(IServiceManager _serviceManager) : BaseAPIController
 	{
 		[HttpGet]
-		public async Task<ActionResult<IEnumerable<ProductToReturnDto>>> GetProducts([FromQuery]ProductSpecParams specparams)
+		public async Task<ActionResult<Pagination<ProductToReturnDto>>> GetProducts([FromQuery]ProductSpecParams specparams)
 		{
 			var Products=await _serviceManager.ProductService.GetProductsAsync(specparams);
 			return Ok(Products);

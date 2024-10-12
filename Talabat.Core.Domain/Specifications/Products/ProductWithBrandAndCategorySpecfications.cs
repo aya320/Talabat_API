@@ -50,6 +50,10 @@ namespace Talabat.Core.Domain.Specifications.Products
 
 		}
 
+		public ProductWithBrandAndCategorySpecfications()
+		{
+		}
+
 		private protected override void AddIncludes()
 		{
 			base.AddIncludes();
