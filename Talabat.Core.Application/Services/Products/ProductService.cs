@@ -16,9 +16,9 @@ namespace Talabat.Core.Application.Services.Products
     public class ProductService(IUnitOfWork _unitOfWork, IMapper _mapper) : IProductService
 	{
 
-		public async Task<IEnumerable<ProductToReturnDto>> GetProductsAsync(string? sort)
+		public async Task<IEnumerable<ProductToReturnDto>> GetProductsAsync(string? sort , int? brandId, int? categoryId)
 		{
-			var spec = new ProductWithBrandAndCategorySpecfications(sort);
+			var spec = new ProductWithBrandAndCategorySpecfications(sort,brandId,categoryId);
 			
 
 			var Products =await _unitOfWork.GetRepository<Product,int>().GetAllWithSpecAsync(spec);

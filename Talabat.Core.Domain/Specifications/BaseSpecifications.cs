@@ -18,11 +18,15 @@ namespace Talabat.Core.Domain.Specifications
 		public Expression<Func<TEntity, object>>? OrderBy { get; set; }
 		public Expression<Func<TEntity, object>>? OrderByDesc { get; set; }
 
-		public BaseSpecifications()
+		public BaseSpecifications(Expression<Func<TEntity, bool>>? criteriaExpression)
         {
-            //Criteria= null;
-        }
+			Criteria = criteriaExpression;
+		}
 
+        protected BaseSpecifications()
+        {
+            
+        }
         public BaseSpecifications(TKey Id)
         {
             Criteria = a=>a.Id.Equals(Id);

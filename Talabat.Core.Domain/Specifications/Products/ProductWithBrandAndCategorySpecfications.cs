@@ -10,12 +10,17 @@ namespace Talabat.Core.Domain.Specifications.Products
 {
 	public class ProductWithBrandAndCategorySpecfications : BaseSpecifications<Product, int>
 	{
-        public ProductWithBrandAndCategorySpecfications(string? sort):base()
+        public ProductWithBrandAndCategorySpecfications(string? sort, int? brandId, int? categoryId) 
+			:base
+			(
+			   x=> 
+			   (!brandId.HasValue ||x.BrandId==brandId.Value  )
+			   &&
+			   (!categoryId.HasValue || x.CategoryId == categoryId.Value)
+			)
         {
 			AddIncludes();
-			AddOrderBy(x => x.Name);
-			if (!string.IsNullOrEmpty(sort))
-			{
+			
 				switch (sort)
 				{
 					case "NameDesc":
@@ -31,8 +36,8 @@ namespace Talabat.Core.Domain.Specifications.Products
 						AddOrderByDesc(x => x.Name);
 						break;
 
-				}
-			}
+				
+			    }
 			
 				
 

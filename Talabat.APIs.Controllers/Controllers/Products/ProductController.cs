@@ -13,9 +13,9 @@ namespace Talabat.APIs.Controllers.Controllers.Products
 	public class ProductController(IServiceManager _serviceManager) : BaseAPIController
 	{
 		[HttpGet]
-		public async Task<ActionResult<IEnumerable<ProductToReturnDto>>> GetProducts(string? sort)
+		public async Task<ActionResult<IEnumerable<ProductToReturnDto>>> GetProducts(string? sort ,int? brandId,int? categoryId)
 		{
-			var Products=await _serviceManager.ProductService.GetProductsAsync(sort);
+			var Products=await _serviceManager.ProductService.GetProductsAsync(sort,brandId,categoryId);
 			return Ok(Products);
 		}
 
