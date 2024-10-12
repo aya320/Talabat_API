@@ -9,7 +9,7 @@ namespace Talabat.Core.Application.Abstraction.Services.Products
 {
     public interface IProductService
     {
-        Task<IEnumerable<ProductToReturnDto>> GetProductsAsync();
+        Task<IEnumerable<ProductToReturnDto>> GetProductsAsync(string? sort);
         Task<ProductToReturnDto> GetProductAsync(int Id);
 
         Task<IEnumerable<CategoryDto>> GetCategoriesAsync();

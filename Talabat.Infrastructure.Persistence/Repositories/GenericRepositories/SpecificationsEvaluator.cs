@@ -20,6 +20,11 @@ namespace Talabat.Infrastructure.Persistence.Repositories.GenericRepositories
 			if ( spec.Criteria is not null ) 
 			query=query.Where(spec.Criteria);
 
+			if(spec.OrderByDesc is not null)
+				query=query.OrderByDescending(spec.OrderByDesc);
+			else if (spec.OrderBy is not null)
+				query=query.OrderBy(spec.OrderBy);
+
 			query = spec.Includes.Aggregate(query,(currentquery,includesexpression)=>currentquery.Include(includesexpression) );
 			return query;
 		}

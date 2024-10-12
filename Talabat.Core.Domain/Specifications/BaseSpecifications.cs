@@ -15,8 +15,8 @@ namespace Talabat.Core.Domain.Specifications
 		public Expression<Func<TEntity , bool>>? Criteria { get; set; }
 
 		public List<Expression<Func<TEntity, object>>> Includes { get; set; } =  new /*List<Expression<Func<TEntity, object>>>*/();
-		
-
+		public Expression<Func<TEntity, object>>? OrderBy { get; set; }
+		public Expression<Func<TEntity, object>>? OrderByDesc { get; set; }
 
 		public BaseSpecifications()
         {
@@ -27,5 +27,17 @@ namespace Talabat.Core.Domain.Specifications
         {
             Criteria = a=>a.Id.Equals(Id);
         }
-    }
+		private protected virtual void AddIncludes()
+		{
+
+		}
+		private protected virtual void AddOrderBy(Expression<Func<TEntity, object>> OrderByExpression)
+		{
+			OrderBy = OrderByExpression;
+		}
+		private protected virtual void AddOrderByDesc(Expression<Func<TEntity, object>> OrderByDescExpression)
+		{
+			OrderByDesc = OrderByDescExpression;
+		}
+	}
 }

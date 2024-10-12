@@ -10,10 +10,31 @@ namespace Talabat.Core.Domain.Specifications.Products
 {
 	public class ProductWithBrandAndCategorySpecfications : BaseSpecifications<Product, int>
 	{
-        public ProductWithBrandAndCategorySpecfications():base()
+        public ProductWithBrandAndCategorySpecfications(string? sort):base()
         {
 			AddIncludes();
+			AddOrderBy(x => x.Name);
+			if (!string.IsNullOrEmpty(sort))
+			{
+				switch (sort)
+				{
+					case "NameDesc":
+						AddOrderByDesc(x => x.Name);
+						break;
+					case "PriceAsyc":
+						AddOrderBy(x => x.Price);
+						break;
+					case "PriceDesc":
+						AddOrderByDesc(x => x.Price);
+						break;
+					default:
+						AddOrderByDesc(x => x.Name);
+						break;
 
+				}
+			}
+			
+				
 
 		}
 
@@ -23,11 +44,12 @@ namespace Talabat.Core.Domain.Specifications.Products
 
 		}
 
-		private void AddIncludes()
+		private protected override void AddIncludes()
 		{
+			base.AddIncludes();
 			Includes.Add(b => b.Brand!);
 			Includes.Add(c => c.Category!);
 		}
-
+	
 	}
 }
