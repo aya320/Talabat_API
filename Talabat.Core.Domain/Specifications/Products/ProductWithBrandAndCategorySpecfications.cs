@@ -10,10 +10,12 @@ namespace Talabat.Core.Domain.Specifications.Products
 {
 	public class ProductWithBrandAndCategorySpecfications : BaseSpecifications<Product, int>
 	{
-        public ProductWithBrandAndCategorySpecfications(string? sort, int? brandId, int? categoryId,int pageSize , int pageIndex) 
-			:base
+		public ProductWithBrandAndCategorySpecfications(string? sort, int? brandId, int? categoryId, int pageSize, int pageIndex, string? search)
+			: base
 			(
-			   x=> 
+			   x =>
+			   (string.IsNullOrEmpty(search) || x.NormalizedName.Contains(search) )
+			   &&
 			   (!brandId.HasValue ||x.BrandId==brandId.Value  )
 			   &&
 			   (!categoryId.HasValue || x.CategoryId == categoryId.Value)

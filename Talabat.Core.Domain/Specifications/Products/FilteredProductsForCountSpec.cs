@@ -9,10 +9,12 @@ namespace Talabat.Core.Domain.Specifications.Products
 {
 	public class FilteredProductsForCountSpec : BaseSpecifications<Product,int>
 	{
-        public FilteredProductsForCountSpec(int? brandId, int? categoryId) :
+        public FilteredProductsForCountSpec(int? brandId, int? categoryId,string? search) :
             base
             (
 			   x =>
+				(string.IsNullOrEmpty(search) || x.NormalizedName.Contains(search))
+			   &&
 			   (!brandId.HasValue || x.BrandId == brandId.Value)
 			   &&
 			   (!categoryId.HasValue || x.CategoryId == categoryId.Value)

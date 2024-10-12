@@ -19,13 +19,13 @@ namespace Talabat.Core.Application.Services.Products
 
 		public async Task<Pagination<ProductToReturnDto>> GetProductsAsync(ProductSpecParams specparams)
 		{
-			var spec = new ProductWithBrandAndCategorySpecfications(specparams.sort ,specparams.brandId ,specparams.categoryId ,specparams.pageSize,specparams.PageIndex);
+			var spec = new ProductWithBrandAndCategorySpecfications(specparams.sort ,specparams.BrandId ,specparams.CategoryId ,specparams.PageSize,specparams.PageIndex,specparams.Search);
 			
 			var Products =await _unitOfWork.GetRepository<Product,int>().GetAllWithSpecAsync(spec);
 			var data = _mapper.Map<IEnumerable<ProductToReturnDto>>(Products);
-			var countspec = new FilteredProductsForCountSpec(specparams.brandId, specparams.categoryId);
+			var countspec = new FilteredProductsForCountSpec(specparams.BrandId, specparams.CategoryId,specparams.Search);
 			var count = await _unitOfWork.GetRepository<Product, int>().GetCountAsync(countspec);
-			return new Pagination<ProductToReturnDto>(specparams.PageIndex , specparams.pageSize,count ){ Data = data };
+			return new Pagination<ProductToReturnDto>(specparams.PageIndex , specparams.PageSize,count ){ Data = data };
 		}
 
 		public async Task<ProductToReturnDto> GetProductAsync(int Id)
