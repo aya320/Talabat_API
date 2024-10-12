@@ -10,7 +10,7 @@ namespace Talabat.Core.Domain.Specifications.Products
 {
 	public class ProductWithBrandAndCategorySpecfications : BaseSpecifications<Product, int>
 	{
-        public ProductWithBrandAndCategorySpecfications(string? sort, int? brandId, int? categoryId) 
+        public ProductWithBrandAndCategorySpecfications(string? sort, int? brandId, int? categoryId,int pageSize , int pageIndex) 
 			:base
 			(
 			   x=> 
@@ -38,7 +38,8 @@ namespace Talabat.Core.Domain.Specifications.Products
 
 				
 			    }
-			
+			    
+			ApplyPagination(pageSize*(pageIndex-1), pageSize);
 				
 
 		}
