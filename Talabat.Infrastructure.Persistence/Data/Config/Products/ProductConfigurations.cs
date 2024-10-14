@@ -16,6 +16,8 @@ namespace Talabat.Infrastructure.Persistence.Data.Config.Products
 		{
 			base.Configure(builder);
 			builder.Property(A => A.Name).IsRequired().HasMaxLength(100);
+			builder.Property(A => A.NormalizedName).IsRequired().HasMaxLength(100);
+
 			builder.Property(A => A.Description).IsRequired().HasMaxLength(100);
 			builder.Property(A => A.Price).HasColumnType("decimal(9,2)");
 

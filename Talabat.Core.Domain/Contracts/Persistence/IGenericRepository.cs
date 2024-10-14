@@ -13,6 +13,7 @@ namespace Talabat.Core.Domain.Contracts.Persistence
 
 		Task<TEntity?> GetAsync(TKey Id);
 		Task<TEntity?> GetWithSpecAsync(ISpecifications<TEntity, TKey> spec);
+        Task<int> GetCountAsync(ISpecifications<TEntity,TKey> spec);
 
 		Task AddAsync(TEntity Entity);
         void Update(TEntity Entity);

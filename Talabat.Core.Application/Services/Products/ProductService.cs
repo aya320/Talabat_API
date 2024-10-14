@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Talabat.Core.Application.Abstraction.Common;
 using Talabat.Core.Application.Abstraction.Models.Products;
 using Talabat.Core.Application.Abstraction.Services.Products;
 using Talabat.Core.Domain.Contracts.Persistence;
@@ -16,14 +17,15 @@ namespace Talabat.Core.Application.Services.Products
     public class ProductService(IUnitOfWork _unitOfWork, IMapper _mapper) : IProductService
 	{
 
-		public async Task<IEnumerable<ProductToReturnDto>> GetProductsAsync()
+		public async Task<Pagination<ProductToReturnDto>> GetProductsAsync(ProductSpecParams specparams)
 		{
-			var spec = new ProductWithBrandAndCategorySpecfications();
+			var spec = new ProductWithBrandAndCategorySpecfications(specparams.sort ,specparams.BrandId ,specparams.CategoryId ,specparams.PageSize,specparams.PageIndex,specparams.Search);
 			
-
 			var Products =await _unitOfWork.GetRepository<Product,int>().GetAllWithSpecAsync(spec);
-			var ProductToReturn = _mapper.Map<IEnumerable<ProductToReturnDto>>(Products);
-			return ProductToReturn;
+			var data = _mapper.Map<IEnumerable<ProductToReturnDto>>(Products);
+			var countspec = new FilteredProductsForCountSpec(specparams.BrandId, specparams.CategoryId,specparams.Search);
+			var count = await _unitOfWork.GetRepository<Product, int>().GetCountAsync(countspec);
+			return new Pagination<ProductToReturnDto>(specparams.PageIndex , specparams.PageSize,count ){ Data = data };
 		}
 
 		public async Task<ProductToReturnDto> GetProductAsync(int Id)

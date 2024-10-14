@@ -62,6 +62,12 @@ namespace Talabat.Infrastructure.Persistence.Repositories.GenericRepositories
 
         }
 
+		public async Task<int> GetCountAsync(ISpecifications<TEntity, TKey> spec)
+		{
+			return await ApplySpecifications(spec).CountAsync();
+
+		}
+
 		public async Task<TEntity?> GetWithSpecAsync(ISpecifications<TEntity, TKey> spec)
 		{
 			return await ApplySpecifications(spec).FirstOrDefaultAsync();
