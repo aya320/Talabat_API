@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Talabat.APIs.Controllers.Base;
+using Talabat.APIs.Controllers.Errors;
 
 namespace Talabat.APIs.Controllers.Controllers.Buggy
 {
@@ -15,7 +16,7 @@ namespace Talabat.APIs.Controllers.Controllers.Buggy
       public IActionResult GetNotFoundRequest()
 		{
 
-			return NotFound(new {StatusCode=404 ,Messsage="NotFound"}); // 404
+			return NotFound(new ApiResponse( 404 )); // 404
 
 		}
 
@@ -32,7 +33,7 @@ namespace Talabat.APIs.Controllers.Controllers.Buggy
       public IActionResult GetBadRequest()
 		{
 
-			return BadRequest(new { StatusCode = 400, Messsage = "BadRequest" }); // 400
+			return BadRequest(new ApiResponse(400)); // 400
 
 		}
 
@@ -48,7 +49,7 @@ namespace Talabat.APIs.Controllers.Controllers.Buggy
        public IActionResult GetUnauthorizedError()
 		{
 
-			return Unauthorized(new { StatusCode = 401, Messsage = "Unauthorized" });
+			return Unauthorized(new ApiResponse(401));
 
 		}
 
