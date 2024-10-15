@@ -25,6 +25,12 @@ namespace Talabat.APIs.MiddleWare
 				//Request Logic
 				await _next(httpContext);
 				//Response Logic
+
+				//if(httpContext.Response.StatusCode==(int)HttpStatusCode.NotFound)
+				//{
+				//	var response = new ApiResponse((int)HttpStatusCode.NotFound , $"The Request Endpoint {httpContext.Request.Path} is Not Found");
+				//	 await httpContext.Response.WriteAsync(response.ToString());
+				//}
 			}
 
 			catch (Exception ex)

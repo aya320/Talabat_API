@@ -84,6 +84,8 @@ namespace Talabat.APIs
 
 			app.UseHttpsRedirection();
 
+			app.UseStatusCodePagesWithReExecute("/Errors/{0}");
+
 			app.UseAuthorization();
 			app.UseAuthentication();
 			
