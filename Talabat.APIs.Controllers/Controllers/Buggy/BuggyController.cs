@@ -40,9 +40,8 @@ namespace Talabat.APIs.Controllers.Controllers.Buggy
 		[HttpGet("badrequest/{id}")] // GET: /api/buggy/badrequest/fiv
        public IActionResult GetValidationError(int id)
 		{
-
+			
 			return Ok();
-
 		}
 
 		[HttpGet("unauthorized")] // GET: /api/buggy/unauthorized

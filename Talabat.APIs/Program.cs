@@ -1,6 +1,8 @@
 
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using Talabat.APIs.Controllers.Errors;
 using Talabat.APIs.Extentions;
 using Talabat.APIs.Services;
 using Talabat.Core.Application;
@@ -21,7 +23,38 @@ namespace Talabat.APIs
 
 			// Add services to the container.
 
-			builder.Services.AddControllers().AddApplicationPart(typeof(Controllers.AssemblyInformation).Assembly);
+
+			builder.Services.Configure<ApiBehaviorOptions>(options =>
+			{
+
+				options.SuppressModelStateInvalidFilter = false;
+				options.InvalidModelStateResponseFactory = (actionContext) =>
+				{
+					var errors = actionContext.ModelState.Where(p => p.Value!.Errors.Count > 0)
+								   .SelectMany(p => p.Value!.Errors)
+								   .Select(p => p.ErrorMessage);
+
+					return new BadRequestObjectResult(new ApiValidationErrorResponse()
+					{ Errors = errors });
+				};
+			});
+
+
+			builder.Services.AddControllers()
+				.ConfigureApiBehaviorOptions(options=>
+				{ 
+				   options.SuppressModelStateInvalidFilter = false;
+					options.InvalidModelStateResponseFactory = (actionContext)=>
+					{
+						var errors = actionContext.ModelState.Where(p => p.Value!.Errors.Count > 0)
+									   .SelectMany(p => p.Value!.Errors)
+									   .Select(p => p.ErrorMessage);
+
+						return new BadRequestObjectResult(new ApiValidationErrorResponse()
+						{ Errors = errors });
+					} ;
+				})
+				.AddApplicationPart(typeof(Controllers.AssemblyInformation).Assembly);
 			// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 			builder.Services.AddEndpointsApiExplorer();
 			builder.Services.AddSwaggerGen();
