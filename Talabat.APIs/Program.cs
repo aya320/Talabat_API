@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Talabat.APIs.Controllers.Errors;
 using Talabat.APIs.Extentions;
+using Talabat.APIs.MiddleWare;
 using Talabat.APIs.Services;
 using Talabat.Core.Application;
 using Talabat.Core.Application.Abstraction;
@@ -74,6 +75,7 @@ namespace Talabat.APIs
 			#endregion
 
 			// Configure the HTTP request pipeline.
+			app.UseMiddleware<CustomExceptionHandlerMiddleWare>();
 			if (app.Environment.IsDevelopment())
 			{
 				app.UseSwagger();
