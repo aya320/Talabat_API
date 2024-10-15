@@ -50,7 +50,8 @@ namespace Talabat.APIs
 			app.UseHttpsRedirection();
 
 			app.UseAuthorization();
-
+			app.UseAuthentication();
+			
 			app.UseStaticFiles();
 			app.MapControllers();
 
