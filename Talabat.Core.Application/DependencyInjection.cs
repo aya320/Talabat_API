@@ -1,14 +1,19 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using AutoMapper;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Talabat.Core.Application.Abstraction.Services;
+using Talabat.Core.Application.Abstraction.Services.Basket;
 using Talabat.Core.Application.Abstraction.Services.Products;
 using Talabat.Core.Application.Mapping;
 using Talabat.Core.Application.Services;
+using Talabat.Core.Application.Services.Basket;
 using Talabat.Core.Application.Services.Products;
+using Talabat.Core.Domain.Contracts.Infrastructure;
 
 namespace Talabat.Core.Application
 {
@@ -22,6 +27,27 @@ namespace Talabat.Core.Application
 			//services.AddAutoMapper(typeof(MappingProfile).Assembly);
 
 			services.AddScoped(typeof(IServiceManager), typeof(ServiceManager));
+
+
+			//services.AddScoped(typeof(IBasketService), typeof(BasketService));
+
+			//services.AddScoped(typeof(Func<IBasketService>), typeof(Func<BasketService>));
+
+			services.AddScoped(typeof(Func<IBasketService>), (serviceProvider) =>
+
+			{
+
+				var mapper = serviceProvider.GetRequiredService<IMapper>();
+
+				var configuration = serviceProvider.GetRequiredService<IConfiguration>();
+
+				var basketRepository = serviceProvider.GetRequiredService<IBasketRepository>();
+
+				return new BasketService(basketRepository, mapper, configuration);
+
+
+
+			});
 
 
 
