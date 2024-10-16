@@ -55,13 +55,13 @@ namespace Talabat.APIs.Controllers.Controllers.Buggy
 	    
 	    	}
 	    
-	    	[HttpGet("forbidden")] // GET: /api/buggy/forbidden
-	    	public IActionResult GetForbiddenError()
-	    	{
+	    	//[HttpGet("forbidden")] // GET: /api/buggy/forbidden
+	    	//public IActionResult GetForbiddenError()
+	    	//{
 	    
-	    		return Forbid();
+	    	//	return Forbid();
 	    
-	    	}
+	    	//}
 	    
 	    	[Authorize]
 	    	[HttpGet("authorized")] // GET: /api/buggy/authorized

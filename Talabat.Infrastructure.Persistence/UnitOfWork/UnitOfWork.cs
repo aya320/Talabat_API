@@ -7,11 +7,10 @@ using System.Text;
 using System.Threading.Tasks;
 using Talabat.Core.Domain.Entities.Products;
 using Talabat.Infrastructure.Persistence.Data;
-using Talabat.Infrastructure.Persistence.Repositories;
 using Talabat.Core.Domain.Common;
 using System.Collections.Concurrent;
 using Talabat.Core.Domain.Contracts.Persistence;
-using Talabat.Infrastructure.Persistence.Repositories.GenericRepositories;
+using Talabat.Infrastructure.Persistence.GenericRepositories;
 
 namespace Talabat.Infrastructure.Persistence.UnitOfWork
 {

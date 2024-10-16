@@ -11,6 +11,7 @@ using Talabat.Core.Application.Abstraction;
 using Talabat.Core.Domain.Contracts;
 using Talabat.Infrastructure.Persistence;
 using Talabat.Infrastructure.Persistence.Data;
+using Talabat.Infrastructure;
 
 namespace Talabat.APIs
 {
@@ -63,7 +64,8 @@ namespace Talabat.APIs
 			builder.Services.AddHttpContextAccessor();
 			builder.Services.AddPersistenceServices(builder.Configuration);
 			builder.Services.AddApplicationService();
-			
+			builder.Services.AddInfrastructureServices(builder.Configuration);
+
 
 			var app = builder.Build();
 
