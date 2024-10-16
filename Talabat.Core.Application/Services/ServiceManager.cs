@@ -25,7 +25,7 @@ namespace Talabat.Core.Application.Services
 		private readonly Lazy< IBasketService > _basketService;
 
 		private readonly Lazy<IEmployeeService> _employeeServices;
-		public ServiceManager(IUnitOfWork unitOfWork, IMapper mapper ,IConfiguration configuration ,Func<BasketService> basketServiceFactory )
+		public ServiceManager(IUnitOfWork unitOfWork, IMapper mapper ,IConfiguration configuration ,Func<IBasketService> basketServiceFactory )
 		{
 			_unitOfWork = unitOfWork;
 			_mapper = mapper;

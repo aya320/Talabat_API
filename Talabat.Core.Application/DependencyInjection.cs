@@ -33,7 +33,7 @@ namespace Talabat.Core.Application
 
 			//services.AddScoped(typeof(Func<IBasketService>), typeof(Func<BasketService>));
 
-			services.AddScoped(typeof(Func<IBasketService>), (serviceProvider) =>
+			services.AddScoped(typeof(Func<IBasketService>), serviceProvider =>
 
 			{
 
@@ -43,7 +43,7 @@ namespace Talabat.Core.Application
 
 				var basketRepository = serviceProvider.GetRequiredService<IBasketRepository>();
 
-				return new BasketService(basketRepository, mapper, configuration);
+				return ()=>new BasketService(basketRepository, mapper, configuration);
 
 
 

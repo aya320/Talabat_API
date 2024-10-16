@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Talabat.Core.Domain.Contracts.Infrastructure;
+using Talabat.Infrastructure.BasketRepository;
+	
 
 namespace Talabat.Infrastructure
 {
@@ -19,7 +21,11 @@ namespace Talabat.Infrastructure
 				var connectionString = configuration.GetConnectionString("Redis");
 				return ConnectionMultiplexer.Connect("connectionString");
 			});
+
+			service.AddScoped(typeof(IBasketRepository), typeof(BasketRepository.BasketRepository));
+
 			return service;
+
 		}
 	}
 }
