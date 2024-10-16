@@ -26,20 +26,20 @@ namespace Talabat.APIs
 			// Add services to the container.
 
 
-			builder.Services.Configure<ApiBehaviorOptions>(options =>
-			{
+			//builder.Services.Configure<ApiBehaviorOptions>(options =>
+			//{
 
-				options.SuppressModelStateInvalidFilter = false;
-				options.InvalidModelStateResponseFactory = (actionContext) =>
-				{
-					var errors = actionContext.ModelState.Where(p => p.Value!.Errors.Count > 0)
-								   .SelectMany(p => p.Value!.Errors)
-								   .Select(p => p.ErrorMessage);
+			//	options.SuppressModelStateInvalidFilter = false;
+			//	options.InvalidModelStateResponseFactory = (actionContext) =>
+			//	{
+			//		var errors = actionContext.ModelState.Where(p => p.Value!.Errors.Count > 0)
+			//					   .SelectMany(p => p.Value!.Errors)
+			//					   .Select(p => p.ErrorMessage);
 
-					return new BadRequestObjectResult(new ApiValidationErrorResponse()
-					{ Errors = errors });
-				};
-			});
+			//		return new BadRequestObjectResult(new ApiValidationErrorResponse()
+			//		{ Errors = errors });
+			//	};
+			//});
 
 
 			builder.Services.AddControllers()
@@ -49,8 +49,12 @@ namespace Talabat.APIs
 					options.InvalidModelStateResponseFactory = (actionContext)=>
 					{
 						var errors = actionContext.ModelState.Where(p => p.Value!.Errors.Count > 0)
-									   .SelectMany(p => p.Value!.Errors)
-									   .Select(p => p.ErrorMessage);
+									   .Select(p=>new ApiValidationErrorResponse.ValidationError ()
+									   {
+										   Field =p.Key ,
+										   Errors =p.Value!.Errors.Select(e=>e.ErrorMessage)
+									   
+									   });
 
 						return new BadRequestObjectResult(new ApiValidationErrorResponse()
 						{ Errors = errors });

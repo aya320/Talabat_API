@@ -1,6 +1,6 @@
 ﻿using System.Net;
-using Talabat.APIs.Controllers.Common.Exceptions;
 using Talabat.APIs.Controllers.Errors;
+using Talabat.Core.Application.Common.Exceptions;
 
 namespace Talabat.APIs.MiddleWare
 {
@@ -35,6 +35,17 @@ namespace Talabat.APIs.MiddleWare
 
 			catch (Exception ex)
 			{
+				if (_webHostEnvironment.IsDevelopment())
+				{
+					// DevelopmentMode
+
+					_logger.LogError(ex, ex.Message);
+
+				}
+				else
+				{
+					//Production
+				}
 				ApiResponse response;
 
 				switch (ex)
@@ -47,21 +58,21 @@ namespace Talabat.APIs.MiddleWare
 
 						break;
 
+					case BadRequestException:
+						httpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+						httpContext.Response.ContentType = "application/json";
+						response = new ApiResponse(400, ex.Message);
+						await httpContext.Response.WriteAsync(response.ToString());
+
+						break;
+
 
 					default:
-						if (_webHostEnvironment.IsDevelopment())
-						{
-							// DevelopmentMode
 
-							_logger.LogError(ex, ex.Message);
-							response = new ApiExceptionResponse((int)HttpStatusCode.InternalServerError, ex.Message, ex.StackTrace!.ToString());
-
-						}
-						else
-						{
-							//Production
-							response = new ApiExceptionResponse((int)HttpStatusCode.InternalServerError);
-						}
+						response = _webHostEnvironment.IsDevelopment() ?
+							new ApiExceptionResponse((int)HttpStatusCode.InternalServerError, ex.Message, ex.StackTrace!.ToString()) 
+						  :
+							new ApiExceptionResponse((int)HttpStatusCode.InternalServerError);
 
 						httpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
 						httpContext.Response.ContentType = "application/json";

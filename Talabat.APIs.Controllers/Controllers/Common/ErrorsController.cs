@@ -24,7 +24,7 @@ namespace Talabat.APIs.Controllers.Controllers.Common
 				return NotFound(response);
 			}
 
-			return StatusCode(code);
+			return StatusCode(code , new ApiResponse(code));
 		}
 
 	}

@@ -38,7 +38,7 @@ namespace Talabat.Infrastructure.BasketRepository
 		public async Task<bool> DeleteAsync(string id)
 		{
 			var deleted = await _database.KeyDeleteAsync(id);
-			return deleted;
+			return deleted; 
 		}
 
 		

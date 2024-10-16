@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Talabat.Core.Application.Common.Exceptions
 {
-	public class NotFoundException : ApplicationException
+	public class BadRequestException : ApplicationException
 	{
-		public NotFoundException(string name , object key):base($"{name} With Key {key} Is Not Found") { }	
+		public BadRequestException(string message) : base(message) { }
 	}
 }
