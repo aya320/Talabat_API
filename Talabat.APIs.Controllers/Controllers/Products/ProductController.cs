@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Talabat.APIs.Controllers.Base;
+using Talabat.APIs.Controllers.Errors;
 using Talabat.Core.Application.Abstraction.Common;
 using Talabat.Core.Application.Abstraction.Models.Products;
 using Talabat.Core.Application.Abstraction.Services;
@@ -24,8 +25,8 @@ namespace Talabat.APIs.Controllers.Controllers.Products
 		public async Task<ActionResult<ProductToReturnDto>> GetProductById(int Id)
 		{
 			var Product = await _serviceManager.ProductService.GetProductAsync(Id);
-			if (Product is null)
-				return NotFound();
+			//if (Product is null)
+			//	return NotFound(new ApiResponse(404 ,$"Product with id : {Id} is Not Found"));
 
 			return Ok(Product);
 		}

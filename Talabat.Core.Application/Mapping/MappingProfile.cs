@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Talabat.Core.Application.Abstraction.Models.Basket;
 using Talabat.Core.Application.Abstraction.Models.Products;
+using Talabat.Core.Domain.Entities.Basket;
 using Talabat.Core.Domain.Entities.Products;
 
 namespace Talabat.Core.Application.Mapping
@@ -21,6 +23,11 @@ namespace Talabat.Core.Application.Mapping
 
 			CreateMap<ProductBrand, BrandDto>();
             CreateMap<ProductCategory, CategoryDto>();
+
+            CreateMap<CustomerBasket, CustomerBasketDto>().ReverseMap();
+			CreateMap<BasketItem, BasketItemDto>().ReverseMap();
+
+
 
 
 

@@ -10,7 +10,7 @@ using Talabat.Core.Domain.Contracts.Persistence;
 using Talabat.Core.Domain.Entities.Products;
 using Talabat.Infrastructure.Persistence.Data;
 
-namespace Talabat.Infrastructure.Persistence.Repositories.GenericRepositories
+namespace Talabat.Infrastructure.Persistence.GenericRepositories
 {
     public class GenericRepository<TEntity, TKey> : IGenericRepository<TEntity, TKey> where TEntity : BaseEntity<TKey> where TKey : IEquatable<TKey>
     {
@@ -49,12 +49,12 @@ namespace Talabat.Infrastructure.Persistence.Repositories.GenericRepositories
 
         }
 
-		public async Task<IEnumerable<TEntity>> GetAllWithSpecAsync(ISpecifications<TEntity, TKey> spec, bool WithTracking = false)
-		{
+        public async Task<IEnumerable<TEntity>> GetAllWithSpecAsync(ISpecifications<TEntity, TKey> spec, bool WithTracking = false)
+        {
             return await ApplySpecifications(spec).ToListAsync();
-		}
+        }
 
-		public async Task<TEntity?> GetAsync(TKey Id)
+        public async Task<TEntity?> GetAsync(TKey Id)
         {
             //if (typeof(TEntity) == typeof(Product))
             //    return await _storecontext.Set<Product>().Where(a => a.Id.Equals(Id)).Include(P => P.Brand).Include(c => c.Category).FirstOrDefaultAsync() as TEntity;
@@ -62,27 +62,27 @@ namespace Talabat.Infrastructure.Persistence.Repositories.GenericRepositories
 
         }
 
-		public async Task<int> GetCountAsync(ISpecifications<TEntity, TKey> spec)
-		{
-			return await ApplySpecifications(spec).CountAsync();
-
-		}
-
-		public async Task<TEntity?> GetWithSpecAsync(ISpecifications<TEntity, TKey> spec)
-		{
-			return await ApplySpecifications(spec).FirstOrDefaultAsync();
-
-		}
-
-		//=> await _storecontext.Set<TEntity>().FindAsync(Id);
-
-		public void Update(TEntity Entity) => _storecontext.Set<TEntity>().Update(Entity);
-
-        private IQueryable<TEntity> ApplySpecifications (ISpecifications<TEntity, TKey> spec)
+        public async Task<int> GetCountAsync(ISpecifications<TEntity, TKey> spec)
         {
-			return  SpecificationsEvaluator<TEntity, TKey>.GetQuery(_storecontext.Set<TEntity>(), spec);
+            return await ApplySpecifications(spec).CountAsync();
 
-		}
-	}
+        }
+
+        public async Task<TEntity?> GetWithSpecAsync(ISpecifications<TEntity, TKey> spec)
+        {
+            return await ApplySpecifications(spec).FirstOrDefaultAsync();
+
+        }
+
+        //=> await _storecontext.Set<TEntity>().FindAsync(Id);
+
+        public void Update(TEntity Entity) => _storecontext.Set<TEntity>().Update(Entity);
+
+        private IQueryable<TEntity> ApplySpecifications(ISpecifications<TEntity, TKey> spec)
+        {
+            return SpecificationsEvaluator<TEntity, TKey>.GetQuery(_storecontext.Set<TEntity>(), spec);
+
+        }
+    }
 
 }

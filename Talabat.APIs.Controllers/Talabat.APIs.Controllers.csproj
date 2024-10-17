@@ -14,4 +14,8 @@
     <ProjectReference Include="..\Talabat.Core.Application.Abstraction\Talabat.Core.Application.Abstraction.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Common\" />
+  </ItemGroup>
+
 </Project>
