@@ -27,7 +27,24 @@ namespace Talabat.Core.Application.Services.Basket
 		{
 			var basket = _mapper.Map<CustomerBasket>(customerBasket);
 
-			var timeToLife = TimeSpan.FromDays(double.Parse( _configuration.GetSection("RedisSetting")[" TimeToLiveInDay"]!));
+			var timeToLiveSetting = _configuration.GetSection("RedisSetting")["TimeToLiveInDay"]?.Trim();
+			Console.WriteLine($"TimeToLiveInDay: {timeToLiveSetting}"); // Debugging line
+
+			if (string.IsNullOrEmpty(timeToLiveSetting))
+			{
+				throw new BadRequestException("TimeToLiveInDay is not configured properly.");
+			}
+
+			double timeToLifeInDays;
+			try
+			{
+				timeToLifeInDays = double.Parse(timeToLiveSetting);
+			}
+			catch (FormatException)
+			{
+				throw new BadRequestException("TimeToLiveInDay must be a valid number.");
+			}
+			var timeToLife = TimeSpan.FromDays(timeToLifeInDays);
 			var updatedBasket =await _repository.UpdateAsync(basket , timeToLife);
 			if (updatedBasket == null) throw new BadRequestException("Can't Update");
 			return customerBasket;
