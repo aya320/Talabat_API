@@ -16,7 +16,7 @@ namespace Talabat.APIs.Controllers.Controllers.Basket
 		public async Task<ActionResult<CustomerBasketDto>> GetBasket(string id)
 		{
 			var basket = await serviceManger.BasketService.GetCustomerBasketAsync(id);
-			return Ok(basket);
+			  return Ok(basket);
 		}
 		[HttpPost]
 		public async Task<ActionResult<CustomerBasketDto>> UpdateBasket(CustomerBasketDto basketDto)

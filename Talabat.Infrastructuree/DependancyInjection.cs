@@ -19,7 +19,8 @@ namespace Talabat.Infrastructure
 			service.AddSingleton(typeof(IConnectionMultiplexer),(serviceProvider)=>
 			{
 				var connectionString = configuration.GetConnectionString("Redis");
-				return ConnectionMultiplexer.Connect("connectionString");
+				var connectionMultiplexerObj = ConnectionMultiplexer.Connect(connectionString!);
+				return connectionMultiplexerObj;
 			});
 
 			service.AddScoped(typeof(IBasketRepository), typeof(BasketRepository.BasketRepository));
