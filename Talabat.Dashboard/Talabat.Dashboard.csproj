@@ -6,4 +6,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Talabat.APIs\Talabat.APIs.csproj" />
+  </ItemGroup>
+
 </Project>

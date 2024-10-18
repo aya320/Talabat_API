@@ -1,3 +1,7 @@
+using Microsoft.EntityFrameworkCore;
+using StackExchange.Redis;
+using Talabat.Infrastructure.Persistence.Data;
+
 namespace Talabat.Dashboard
 {
 	public class Program
@@ -8,6 +12,12 @@ namespace Talabat.Dashboard
 
 			// Add services to the container.
 			builder.Services.AddControllersWithViews();
+			builder.Services.AddDbContext<StoreContext>((options) =>
+			{
+				options.UseLazyLoadingProxies().UseSqlServer(builder.Configuration.GetConnectionString("StoreContext"));
+
+			});
+
 
 			var app = builder.Build();
 
