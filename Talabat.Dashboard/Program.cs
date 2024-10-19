@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using StackExchange.Redis;
+using Talabat.Core.Application.Abstraction.Services;
 using Talabat.Infrastructure.Persistence.Data;
 
 namespace Talabat.Dashboard
@@ -18,8 +20,9 @@ namespace Talabat.Dashboard
 
 			});
 
+		
 
-			var app = builder.Build();
+            var app = builder.Build();
 
 			// Configure the HTTP request pipeline.
 			if (!app.Environment.IsDevelopment())
