@@ -15,9 +15,9 @@ namespace Talabat.Infrastructure.Persistence.GenericRepositories
     public class GenericRepository<TEntity, TKey> : IGenericRepository<TEntity, TKey> where TEntity : BaseEntity<TKey> where TKey : IEquatable<TKey>
     {
 
-        private readonly StoreContext _storecontext;
+        private readonly StoreDbContext _storecontext;
 
-        public GenericRepository(StoreContext storecontext)
+        public GenericRepository(StoreDbContext storecontext)
         {
             _storecontext = storecontext;
         }

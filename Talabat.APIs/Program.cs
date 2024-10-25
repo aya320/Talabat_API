@@ -12,6 +12,10 @@ using Talabat.Core.Domain.Contracts;
 using Talabat.Infrastructure.Persistence;
 using Talabat.Infrastructure.Persistence.Data;
 using Talabat.Infrastructure;
+using Talabat.Core.Domain.Entities.Identity;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Talabat.Infrastructure.Persistence._Identity;
 
 namespace Talabat.APIs
 {
@@ -48,17 +52,28 @@ namespace Talabat.APIs
 				   options.SuppressModelStateInvalidFilter = false;
 					options.InvalidModelStateResponseFactory = (actionContext)=>
 					{
-						var errors = actionContext.ModelState.Where(p => p.Value!.Errors.Count > 0)
-									   .Select(p=>new ApiValidationErrorResponse.ValidationError ()
-									   {
-										   Field =p.Key ,
-										   Errors =p.Value!.Errors.Select(e=>e.ErrorMessage)
-									   
-									   });
+                        //var errors = actionContext.ModelState.Where(p => p.Value!.Errors.Count > 0)
+                        //			   .Select(p=>new ApiValidationErrorResponse.ValidationError ()
+                        //			   {
+                        //				   Field =p.Key ,
+                        //				   Errors =p.Value!.Errors.Select(e=>e.ErrorMessage)
 
-						return new BadRequestObjectResult(new ApiValidationErrorResponse()
-						{ Errors = errors });
-					} ;
+                        //			   });
+
+                        //return new BadRequestObjectResult(new ApiValidationErrorResponse()
+                        //{ Errors=errors};
+                        //{ Errors = errors });
+
+                        var errors = actionContext.ModelState
+                            .Where(p => p.Value.Errors.Count > 0)
+                            .SelectMany(p => p.Value.Errors.Select(e => e.ErrorMessage)) 
+                            .ToArray();
+
+                        return new BadRequestObjectResult(new ApiValidationErrorResponse
+                        {
+                            Errors = errors 
+                        });
+                    } ;
 				})
 				.AddApplicationPart(typeof(Controllers.AssemblyInformation).Assembly);
 			// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -69,15 +84,17 @@ namespace Talabat.APIs
 			builder.Services.AddPersistenceServices(builder.Configuration);
 			builder.Services.AddApplicationService();
 			builder.Services.AddInfrastructureServices(builder.Configuration);
+			//builder.Services.AddIdentityCore<ApplicationUser>();
+			builder.Services.AddIdentityServices(builder.Configuration);
 
 
-			var app = builder.Build();
+            var app = builder.Build();
 
 			#region  Databases Initialization
 
 
 			//await InitializerExtentions.StoreContextInitializerAsync(app);
-			await app.StoreContextInitializerAsync(); 
+			await app.InitializeAsync(); 
 			#endregion
 
 			// Configure the HTTP request pipeline.

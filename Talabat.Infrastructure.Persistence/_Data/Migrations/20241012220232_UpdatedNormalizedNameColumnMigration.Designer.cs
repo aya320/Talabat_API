@@ -11,9 +11,9 @@ using Talabat.Infrastructure.Persistence.Data;
 
 namespace Talabat.Infrastructure.Persistence.Data.Migrations
 {
-    [DbContext(typeof(StoreContext))]
-    [Migration("20241012214834_NormalizedNameColumnMigration")]
-    partial class NormalizedNameColumnMigration
+    [DbContext(typeof(StoreDbContext))]
+    [Migration("20241012220232_UpdatedNormalizedNameColumnMigration")]
+    partial class UpdatedNormalizedNameColumnMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -68,7 +68,8 @@ namespace Talabat.Infrastructure.Persistence.Data.Migrations
 
                     b.Property<string>("NormalizedName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("PictureUrl")
                         .HasColumnType("nvarchar(max)");

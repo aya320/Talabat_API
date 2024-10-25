@@ -6,16 +6,16 @@
     <br />
     <br />
     <br />
+    <br />
     <div class="text-center mt-5 fade-in" id="animatedText">
    
-        <h1 class="display-4" id="textElement" style="font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif, sans-serif; font-size:65px; color:black;">
-            Welcome To Our Company 
-            <br />
-            <i class="fa-regular fa-heart fa-1x" style="color:black;" id="textElement"></i>
-            <i class="fa-regular fa-face-smile-wink fa-1x" style="color:black;"></i>
+        <h1 class="display-4" id="textElement" style="font-family:'Times New Roman', Times, serif" ; font-size:45px; color:lightgray;">
+            Welcome to Talabat! Enjoy Exclusive Offers Just for You!
+           
+            <i class="fa-solid fa-heart fa-1x" style="color:lightgray;" id="textElement"></i>  🛒
 
         </h1>
-     
+       
 
 
     </div>
@@ -39,9 +39,10 @@
 
             let isLight = true;
             const colorChangeInterval = setInterval(() => {
-                contentElement.style.color = isLight ? 'black' : 'lightgray';
+                
+                contentElement.style.color = isLight ? 'lightgray' : 'black';
                 isLight = !isLight; 
-            }, 500); 
+            }, 700); 
 
             setTimeout(() => clearInterval(colorChangeInterval), 10000);
         };
