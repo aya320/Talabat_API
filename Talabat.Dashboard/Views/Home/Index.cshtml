@@ -3,6 +3,50 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <br />
+    <br />
+    <br />
+    <div class="text-center mt-5 fade-in" id="animatedText">
+   
+        <h1 class="display-4" id="textElement" style="font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif, sans-serif; font-size:65px; color:black;">
+            Welcome To Our Company 
+            <br />
+            <i class="fa-regular fa-heart fa-1x" style="color:black;" id="textElement"></i>
+            <i class="fa-regular fa-face-smile-wink fa-1x" style="color:black;"></i>
+
+        </h1>
+     
+
+
+    </div>
+
+    <style>
+        .fade-in {
+            opacity: 0;
+            transition: opacity 2s;
+        }
+
+            .fade-in.show {
+                opacity: 1;
+            }
+    </style>
+
+    <script>
+        window.onload = function () {
+            const textElement = document.getElementById('animatedText');
+            const contentElement = document.getElementById('textElement');
+            textElement.classList.add('show');
+
+            let isLight = true;
+            const colorChangeInterval = setInterval(() => {
+                contentElement.style.color = isLight ? 'black' : 'lightgray';
+                isLight = !isLight; 
+            }, 500); 
+
+            setTimeout(() => clearInterval(colorChangeInterval), 10000);
+        };
+    </script>
+
+
+
 </div>
