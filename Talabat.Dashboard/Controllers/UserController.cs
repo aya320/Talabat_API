@@ -51,7 +51,7 @@ namespace Talabat.Dashboard.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(string id, UserRoleViewModel model)
+        public async Task<IActionResult> Update(string id, UserRoleViewModel model)
         {
             var user = await _userManager.FindByIdAsync(model.UserId);
             var userRoles = await _userManager.GetRolesAsync(user);
@@ -68,7 +68,6 @@ namespace Talabat.Dashboard.Controllers
                     await _userManager.AddToRoleAsync(user, role.Name);
                 }
             }
-
             return RedirectToAction(nameof(Index));
         }
      }
