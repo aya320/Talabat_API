@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Talabat.Core.Domain.Entities.Identity;
 using Talabat.Dashboard.Models;
 
 namespace Talabat.Dashboard.Controllers
 {
-    public class UserController(RoleManager<IdentityRole> _roleManager ,UserManager<IdentityUser> _userManager) : Controller
+    public class UserController(RoleManager<IdentityRole> _roleManager ,UserManager<ApplicationUser> _userManager) : Controller
     {
         public async Task< IActionResult > Index()
         {
@@ -13,7 +14,7 @@ namespace Talabat.Dashboard.Controllers
             {
                 Id =u.Id,
                 UserName=u.UserName,
-                //DisplayName=u.DisplayName, 
+                DisplayName = u.DisplayName,
                 PhoneNumber =u.PhoneNumber,
                 Email=u.Email,
                 Roles =_userManager.GetRolesAsync(u).Result,

@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using StackExchange.Redis;
 using Talabat.Core.Application.Abstraction.Services;
+using Talabat.Infrastructure.Persistence._Identity;
 using Talabat.Infrastructure.Persistence.Data;
 
 namespace Talabat.Dashboard
@@ -14,13 +15,18 @@ namespace Talabat.Dashboard
 
 			// Add services to the container.
 			builder.Services.AddControllersWithViews();
-			builder.Services.AddDbContext<StoreContext>((options) =>
+			builder.Services.AddDbContext<StoreDbContext>((options) =>
 			{
 				options.UseLazyLoadingProxies().UseSqlServer(builder.Configuration.GetConnectionString("StoreContext"));
 
 			});
+            //builder.Services.AddDbContext<StoreIdentityDbContext>((options) =>
+            //{
+            //    options.UseLazyLoadingProxies().UseSqlServer(builder.Configuration.GetConnectionString("IdentityContext"));
 
-		
+            //});
+
+
 
             var app = builder.Build();
 

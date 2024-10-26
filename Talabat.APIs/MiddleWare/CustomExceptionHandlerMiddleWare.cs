@@ -60,13 +60,27 @@ namespace Talabat.APIs.MiddleWare
 					response = new ApiResponse(404, ex.Message);
 					await httpContext.Response.WriteAsync(response.ToString());
 					break;
-				case BadRequestException:
+
+                case ValidationException validationException:
+                    httpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                    httpContext.Response.ContentType = "application/json";
+                    response = new ApiValidationErrorResponse(ex.Message) { Errors = validationException.Errors };
+                    await httpContext.Response.WriteAsync(response.ToString());
+                    break;
+
+                case BadRequestException:
 					httpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
 					httpContext.Response.ContentType = "application/json";
 					response = new ApiResponse(400, ex.Message);
 					await httpContext.Response.WriteAsync(response.ToString());
 					break;
-				default:
+                case UnAuthorizedException:
+                    httpContext.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+                    httpContext.Response.ContentType = "application/json";
+                    response = new ApiResponse(401, ex.Message);
+                    await httpContext.Response.WriteAsync(response.ToString());
+                    break;
+                default:
 					response = _env.IsDevelopment() ?
 						 new ApiExceptionResponse((int)HttpStatusCode.InternalServerError, ex.Message, ex.StackTrace?.ToString()) :
 						 new ApiExceptionResponse((int)HttpStatusCode.InternalServerError);

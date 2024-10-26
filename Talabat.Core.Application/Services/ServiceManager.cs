@@ -6,9 +6,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Talabat.Core.Application.Abstraction.Services;
+using Talabat.Core.Application.Abstraction.Services.Auth;
 using Talabat.Core.Application.Abstraction.Services.Basket;
 using Talabat.Core.Application.Abstraction.Services.Employees;
 using Talabat.Core.Application.Abstraction.Services.Products;
+using Talabat.Core.Application.Services.Auth;
 using Talabat.Core.Application.Services.Basket;
 using Talabat.Core.Application.Services.Employees;
 using Talabat.Core.Application.Services.Products;
@@ -25,7 +27,8 @@ namespace Talabat.Core.Application.Services
 		private readonly Lazy< IBasketService > _basketService;
 
 		private readonly Lazy<IEmployeeService> _employeeServices;
-		public ServiceManager(IUnitOfWork unitOfWork, IMapper mapper ,IConfiguration configuration ,Func<IBasketService> basketServiceFactory )
+		private readonly Lazy<IAuthServices> _authServices;
+		public ServiceManager(IUnitOfWork unitOfWork, IMapper mapper ,IConfiguration configuration ,Func<IBasketService> basketServiceFactory ,Func<IAuthServices> authServicesFactory)
 		{
 			_unitOfWork = unitOfWork;
 			_mapper = mapper;
@@ -33,6 +36,7 @@ namespace Talabat.Core.Application.Services
 			_productService = new Lazy<IProductService>(()=>new ProductService(_unitOfWork,_mapper));
 			_employeeServices = new Lazy<IEmployeeService>(() => new EmployeeServices(_unitOfWork, _mapper));
 			_basketService = new Lazy<IBasketService>(basketServiceFactory);
+			_authServices = new Lazy<IAuthServices>(authServicesFactory , LazyThreadSafetyMode.ExecutionAndPublication);
 
 		}
 
@@ -40,5 +44,7 @@ namespace Talabat.Core.Application.Services
 		public IEmployeeService EmployeeServices => _employeeServices.Value;
 
 		public IBasketService BasketService => _basketService.Value;
-	}
+
+        public IAuthServices AuthServices => _authServices.Value;
+    }
 }
