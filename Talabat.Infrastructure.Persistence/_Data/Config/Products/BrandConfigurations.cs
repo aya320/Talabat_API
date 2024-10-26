@@ -15,7 +15,9 @@ namespace Talabat.Infrastructure.Persistence.Data.Config.Products
 		{
 			base.Configure(builder);
 			builder.Property(A => A.Name).IsRequired();
+            builder.HasIndex(A => A.Name).IsUnique();
 
-		}
-	}
+
+        }
+    }
 }
