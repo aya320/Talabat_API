@@ -1,31 +1,38 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Talabat.Core.Domain.Contracts.Persistence;
 using Talabat.Core.Domain.Entities.Products;
+using Talabat.Dashboard.Models;
 
 namespace Talabat.Dashboard.Controllers
 {
     public class BrandController(IUnitOfWork _unitOfWork) : Controller
     {
-        public async Task< IActionResult >Index()
+        public async Task<IActionResult> Index()
         {
-            var brands = await _unitOfWork.GetRepository<ProductBrand,int>().GetAllAsync();
+            var brands = await _unitOfWork.GetRepository<ProductBrand, int>().GetAllAsync();
             return View(brands);
         }
 
-        public async Task<IActionResult> Create(ProductBrand brand)
+        [HttpPost]
+        public async Task<IActionResult> Create(ProductBrandViewModel model)
         {
-            try
+            if (!ModelState.IsValid)
             {
-                await _unitOfWork.GetRepository<ProductBrand, int>().AddAsync(brand);
-                await _unitOfWork.CompleteAsync();
-                return RedirectToAction("Index");
+                return View("Index", await _unitOfWork.GetRepository<ProductBrand, int>().GetAllAsync());
+            }
 
-            }
-            catch (Exception ex)
+            var brand = new ProductBrand
             {
-                ModelState.AddModelError("Name", "please enter your Name");
-                return View("Index", await _unitOfWork.GetRepository<ProductBrand, int>().GetAllAsync()); ;
-            }
+                Id = 0,
+                Name = model.Name,
+                CreatedBy = "ahmed.nasr",
+                LastModifiedBy = "ahmed.nasr"
+            };
+
+            await _unitOfWork.GetRepository<ProductBrand, int>().AddAsync(brand);
+            await _unitOfWork.CompleteAsync();
+
+            return RedirectToAction("Index");
         }
 
         public async Task<IActionResult> Delete(int id)
