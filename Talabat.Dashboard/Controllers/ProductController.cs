@@ -67,8 +67,7 @@ namespace Talabat.Dashboard.Controllers
                 {
                     productViewModel.PictureUrl = PictureSetting.UploadFile(productViewModel.Image, "products");
                 }
-                var mappedProduct = _mapper.Map<ProductViewModel,
-         Product>(productViewModel);
+                var mappedProduct = _mapper.Map<ProductViewModel,  Product>(productViewModel);
                 _unitOfWork.GetRepository<Product, int>().Update(mappedProduct);
                 var result = await _unitOfWork.CompleteAsync();
                 if (result > 0)
@@ -77,6 +76,38 @@ namespace Talabat.Dashboard.Controllers
                 }
             }
             return View(productViewModel);
+        }
+
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            var product = await _unitOfWork.GetRepository<Product, int>().GetAsync(id);
+            var mappedProduct = _mapper.Map<Product, ProductViewModel>(product);
+            return View(mappedProduct);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id, ProductViewModel productViewModel)
+        {
+            if (id != productViewModel.Id)
+            {
+                return NotFound();
+            }
+            try
+            {
+                var product = await _unitOfWork.GetRepository<Product, int>().GetAsync(id);
+                if (product.PictureUrl != null)
+                {
+                    PictureSetting.DeleteFile(product.PictureUrl, "products");
+                }
+                _unitOfWork.GetRepository<Product, int>().Delete(product);
+                await _unitOfWork.CompleteAsync();
+                return RedirectToAction("Index");
+            }
+            catch (System.Exception)
+            {
+                return
+         View(productViewModel);
+            }
         }
     }
 }
