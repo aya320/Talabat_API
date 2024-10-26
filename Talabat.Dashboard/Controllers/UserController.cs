@@ -8,17 +8,26 @@ namespace Talabat.Dashboard.Controllers
 {
     public class UserController(RoleManager<IdentityRole> _roleManager ,UserManager<ApplicationUser> _userManager) : Controller
     {
-        public async Task< IActionResult > Index()
+        public async Task<IActionResult> Index()
         {
-            var users = await _userManager.Users.Select(u => new UserViewModel()
+            var userList = await _userManager.Users.ToListAsync();
+            var users = new List<UserViewModel>();
+
+            foreach (var user in userList)
             {
-                Id =u.Id,
-                UserName=u.UserName,
-                DisplayName = u.DisplayName,
-                PhoneNumber =u.PhoneNumber,
-                Email=u.Email,
-                Roles =_userManager.GetRolesAsync(u).Result,
-            }).ToListAsync();
+                var roles = await _userManager.GetRolesAsync(user); 
+
+                users.Add(new UserViewModel()
+                {
+                    Id = user.Id,
+                    UserName = user.UserName,
+                    DisplayName = user.DisplayName,
+                    PhoneNumber = user.PhoneNumber,
+                    Email = user.Email,
+                    Roles = roles
+                });
+            }
+
             return View(users);
         }
 
