@@ -27,7 +27,10 @@ namespace Talabat.Dashboard.Controllers
             {
                 if (productViewModel.Image != null)
                 {
-                    productViewModel.PictureUrl = PictureSetting.UploadFile(productViewModel.Image, "Products");
+                    if (productViewModel.PictureUrl != null)
+                    {
+                        productViewModel.PictureUrl = PictureSetting.UploadFile(productViewModel.Image, "Products");
+                    }
                 }
                 else
                 {
@@ -57,11 +60,13 @@ namespace Talabat.Dashboard.Controllers
             }
             if (ModelState.IsValid)
             {
-                if (productViewModel.Image
-         != null)
+                if (productViewModel.Image != null)
                 {
-                    PictureSetting.DeleteFile(productViewModel.PictureUrl, "products");
+                    if (productViewModel.PictureUrl != null) { 
+
+                        PictureSetting.DeleteFile(productViewModel.PictureUrl, "products");
                     productViewModel.PictureUrl = PictureSetting.UploadFile(productViewModel.Image, "products");
+                }
                 }
                 else
                 {
