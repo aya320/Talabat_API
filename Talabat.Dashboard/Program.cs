@@ -2,9 +2,12 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using StackExchange.Redis;
 using Talabat.Core.Application.Abstraction.Services;
+using Talabat.Core.Domain.Contracts.Persistence;
 using Talabat.Core.Domain.Entities.Identity;
+using Talabat.Dashboard.Helper;
 using Talabat.Infrastructure.Persistence._Identity;
 using Talabat.Infrastructure.Persistence.Data;
+using Talabat.Infrastructure.Persistence.UnitOfWork;
 
 namespace Talabat.Dashboard
 {
@@ -30,7 +33,8 @@ namespace Talabat.Dashboard
             builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
         .AddEntityFrameworkStores<StoreIdentityDbContext>()
         .AddDefaultTokenProviders();
-
+			builder.Services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
+			builder.Services.AddAutoMapper(typeof(MapsProfile));
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
