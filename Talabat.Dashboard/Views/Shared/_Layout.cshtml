@@ -3,10 +3,10 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Talabat.Dashboard</title>
+    <title>@ViewData["Title"] - LinkDev.Talabat.Dashboard</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/Talabat.Dashboard.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/LinkDev.Talabat.Dashboard.styles.css" asp-append-version="true" />
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
     <link href="~/css/styles.css" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
@@ -22,6 +22,7 @@
             <div class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
                 <!-- Navbar-->
                 <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+                    <li><a class="nav-item" asp-controller="Admin" asp-action="Logout">Logout</a></li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
@@ -31,11 +32,7 @@
                             <li><a class="dropdown-item" href=#!>Logout</a></li>
                         </ul>
                     </li>
-
-                    <li>
-                    <a class="nav-item" asp-controller="Admin" asp-action="Logout">Logout</a></li>
                 </ul>
-
             </div>
         </nav>
     </header>
@@ -53,19 +50,15 @@
                             <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
                             Users
                         </a>
-                       
-
+                        <div class="sb-sidenav-menu-heading">Website  </div>
                         <a class="nav-link" asp-controller="Product" asp-action="Index">
                             <div class="sb-nav-link-icon"></div>
                             Products
                         </a>
-
                         <a class="nav-link" asp-controller="Brand" asp-action="Index">
                             <div class="sb-nav-link-icon"></div>
                             Product Brand
                         </a>
-                   
-                </div>
                     </div>
                 </div>
 
@@ -78,12 +71,7 @@
                 </main>
             </div>
         </div>
-    </div> 
-
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2024 - Talabat.Dashboard - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
+    </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
