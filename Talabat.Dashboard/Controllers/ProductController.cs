@@ -27,21 +27,31 @@ namespace Talabat.Dashboard.Controllers
             {
                 if (productViewModel.Image != null)
                 {
-                    if (productViewModel.PictureUrl != null)
-                    {
-                        productViewModel.PictureUrl = PictureSetting.UploadFile(productViewModel.Image, "Products");
-                    }
+                    productViewModel.PictureUrl = PictureSetting.UploadFile(productViewModel.Image, "Products");
                 }
                 else
                 {
                     productViewModel.PictureUrl = "images/products/glazed-donuts.png";
                 }
+
                 var mappedProduct = _mapper.Map<ProductViewModel, Product>(productViewModel);
+                string userName = User.Identity?.Name ?? "aya.ali";
+                mappedProduct.CreatedBy = userName;
+                mappedProduct.CreatedOn = DateTime.UtcNow;
+                mappedProduct.LastModifiedBy = userName;
+                mappedProduct.LastModifiedOn = DateTime.UtcNow;
+
+
+                mappedProduct.NormalizedName = productViewModel.Name?.ToUpperInvariant();
+
                 await _unitOfWork.GetRepository<Product, int>().AddAsync(mappedProduct);
                 await _unitOfWork.CompleteAsync();
+
                 return RedirectToAction("Index");
             }
+
             return View(productViewModel);
+
         }
 
         public async Task<IActionResult> Update(int id)
@@ -73,6 +83,14 @@ namespace Talabat.Dashboard.Controllers
                     productViewModel.PictureUrl = PictureSetting.UploadFile(productViewModel.Image, "products");
                 }
                 var mappedProduct = _mapper.Map<ProductViewModel,  Product>(productViewModel);
+                string userName = User.Identity?.Name ?? "aya.ali";
+                mappedProduct.CreatedBy = userName;
+                mappedProduct.CreatedOn = DateTime.UtcNow;
+                mappedProduct.LastModifiedBy = userName;
+                mappedProduct.LastModifiedOn = DateTime.UtcNow;
+
+
+                mappedProduct.NormalizedName = productViewModel.Name?.ToUpperInvariant();
                 _unitOfWork.GetRepository<Product, int>().Update(mappedProduct);
                 var result = await _unitOfWork.CompleteAsync();
                 if (result > 0)
