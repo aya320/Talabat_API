@@ -2,52 +2,29 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <br />
-    <br />
-    <br />
-    <br />
-    <div class="text-center mt-5 fade-in" id="animatedText">
-   
-        <h1 class="display-4" id="textElement" style="font-family:'Times New Roman', Times, serif" ; font-size:45px; color:lightgray;">
-            Welcome to Talabat! Enjoy Exclusive Offers Just for You!
-           
-            <i class="fa-solid fa-heart fa-1x" style="color:lightgray;" id="textElement"></i>  🛒
-
+<div class="d-flex align-items-center justify-content-center" style="height: 70vh;">
+    <!-- Adjusted height -->
+    <div class="text-center">
+        <h1 id="welcomeText">
+            Welcome to Talabat!
+          🛒
         </h1>
-       
-
-
     </div>
-
-    <style>
-        .fade-in {
-            opacity: 0;
-            transition: opacity 2s;
-        }
-
-            .fade-in.show {
-                opacity: 1;
-            }
-    </style>
-
-    <script>
-        window.onload = function () {
-            const textElement = document.getElementById('animatedText');
-            const contentElement = document.getElementById('textElement');
-            textElement.classList.add('show');
-
-            let isLight = true;
-            const colorChangeInterval = setInterval(() => {
-                
-                contentElement.style.color = isLight ? 'lightgray' : 'black';
-                isLight = !isLight; 
-            }, 700); 
-
-            setTimeout(() => clearInterval(colorChangeInterval), 10000);
-        };
-    </script>
-
-
-
 </div>
+
+<style>
+    /* Inline styles for the welcome text */
+    #welcomeText {
+        font-family: 'Times New Roman', Times, serif;
+        font-size: 90px; /* Adjusted font size */
+        color: black; /* Initial text color */
+        font-weight: 350;
+        font-style: italic;
+        letter-spacing: 2px;
+        text-shadow: 15px 15px 20px maroon; /* Larger maroon shadow */
+        transition: color 1.5s ease-in-out, text-shadow 1.5s ease-in-out; /* Increased duration */
+        text-align: center; /* Center the text */
+    }
+
+</style>
+
