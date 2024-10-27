@@ -1,10 +1,50 @@
-﻿@model RoleFormViewModel 
-<form method="post" asp-action="Create">
-    <div class="input-group mb-2">
-        <input asp-for="Name" class="form-control" />
-        <div class="input-group-append">
-            <button type="submit" class="btn btn-success">Add new role</button>
+﻿@model RoleFormViewModel
+
+<div class="d-flex justify-content-center my-6"> <!-- Use flexbox to center the form -->
+    <form method="post" asp-action="Create" class="form-inline">
+        <div class="input-group mb-3">
+            <input asp-for="Name" class="form-control role-input" placeholder="Enter role name" />
+            <div class="input-group-append">
+                <button type="submit" class="btn role-button">
+                    <i class="fas fa-plus-circle"></i> Add New Role
+                </button>
+            </div>
         </div>
-    </div>
-    <span asp-validation-for="Name" class="text-danger"></span>
-</form>
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </form>
+</div>
+
+<style>
+    .role-input {
+        border: 2px solid #007bff; /* Blue border */
+        border-radius: 5px; /* Rounded corners */
+        padding: 10px; /* Reduced padding for less length */
+        height: 50px; /* Fixed height for the input field */
+        width: 900px; /* Increased width */
+        transition: border-color 0.3s; /* Transition effect */
+        outline: none; /* Remove default outline */
+        font-size: 18px; /* Increased font size */
+    }
+
+    .role-input:focus {
+        border-color: #0056b3; /* Darker blue on focus */
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Outline effect on focus */
+    }
+
+    .role-button {
+        background-color: #003366; /* Dark blue background */
+        border-color: #003366; /* Border color */
+        color: white; /* White text color */
+        border-radius: 5px; /* Rounded corners */
+        transition: background-color 0.3s, transform 0.3s; /* Transition for background color and zoom */
+        font-size: 18px; /* Increased font size for the button */
+        padding: 10px 20px; /* Added padding for the button */
+        height: 50px; /* Match button height with input */
+    }
+
+    .role-button:hover {
+        background-color: #002244; /* Even darker blue on hover */
+        transform: scale(1.05); /* Slight zoom effect on hover */
+        cursor: pointer; /* Change cursor to pointer */
+    }
+</style>

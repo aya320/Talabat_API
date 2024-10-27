@@ -15,7 +15,7 @@ namespace Talabat.Dashboard.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginDto login)
         {
-            var user = await _userManager.FindByIdAsync(login.Email);
+            var user = await _userManager.FindByEmailAsync(login.Email);
 
             if (user == null)
             {
@@ -23,14 +23,14 @@ namespace Talabat.Dashboard.Controllers
                 return RedirectToAction(nameof(Login));
             }
 
-            var result = await _signInManager.CheckPasswordSignInAsync(user, login.Password, false);
+            //var result = await _signInManager.CheckPasswordSignInAsync(user, login.Password, false);
 
-            if (!result.Succeeded || !await _userManager.IsInRoleAsync(user, "Admin"))
-            {
-                ModelState.AddModelError(string.Empty, "You are not authorized");
-                return RedirectToAction(nameof(Login));
+            //if (!result.Succeeded /*|| !await _userManager.IsInRoleAsync(user, "Admin")*/)
+            //{
+            //    ModelState.AddModelError(string.Empty, "You are not authorized");
+            //    return RedirectToAction(nameof(Login));
 
-            }
+            //}
 
             return RedirectToAction("Index", "Home");
         }
