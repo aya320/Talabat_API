@@ -4,32 +4,45 @@
     ViewData["Title"] = "Update";
 }
 
-<h1>Update @Model.UserName</h1>
-<hr />
+<br />
+<br />
+<br />
+<br />
+
 <div class="container">
+  <h2 class="text-center" style="text-shadow: 2px 2px 4px rgba(0, 123, 255, 0.7);">
+    Manage user roles
+</h2>
+<hr style="border-top: 2px solid #007bff; width: 50%; margin: 0 auto;" />
 
     <form  asp-action="Update">
         <input asp-for="UserId" class="form-control" hidden />
-        <div>
+        <div class="text-center mb-4">
             <label asp-for="UserName" class="col-form-label"></label>
-            <input asp-for="UserName" class="form-control" disabled />
+            <input asp-for="UserName" class="form-control" disabled
+                   style="width: 80%; max-width: 300px; margin: auto; border: 1px solid #007bff; box-shadow: none; border-radius: 5px; padding: 8px; transition: border-color 0.3s;" />
         </div>
-        <h3>Manage user roles</h3>
-        <hr />
-        @for (int i = 0; i < Model.Roles.Count; i++)
-        {
-            <div>
 
-                <input asp-for="@Model.Roles[i].Name" hidden />
-                <input asp-for="@Model.Roles[i].IsSelected" class="form-check-label" />
-                <label asp-for="@Model.Roles[i]" class="form-check-label">@Model.Roles[i].Name</label>
-                <span asp-validation-for="Roles"></span>
+       
+      
+            @for (int i = 0; i < Model.Roles.Count; i++)
+            {
+                <div class="text-center mb-2 border p-3" style="border: 1px solid #007bff; border-radius: 5px;">
+                    <input asp-for="@Model.Roles[i].Name" hidden />
+                    <input asp-for="@Model.Roles[i].IsSelected" class="form-check-input" id="role-@i" />
+                    <label class="form-check-label" for="role-@i">@Model.Roles[i].Name</label>
+                    <span asp-validation-for="Roles"></span>
+                </div>
+            }
 
-            </div>
-        }
+        
         <br />
-        <input type="submit" value="Save" class="btn btn-success" />
-        <a asp-action="Index" class="btn btn-primary" Back to index></a>
+        <div class="text-center mt-4">
+            <input type="submit" value="Save" class="btn" style="background-color: #007bff; color: white; border: none; font-size: 1.2rem; padding: 10px 20px; border-radius: 5px; cursor: pointer; transition: background-color 0.3s;" />
+            <a asp-action="Index" class="btn" style="background-color: #0056b3; color: white; border: none; font-size: 1.2rem; padding: 10px 20px; border-radius: 5px; cursor: pointer; transition: background-color 0.3s; margin-left: 10px;">Back to index</a>
+        </div>
+
+
 
     </form>
 

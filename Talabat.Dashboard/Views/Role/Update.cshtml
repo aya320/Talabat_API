@@ -2,26 +2,73 @@
 @{
     ViewData["Title"] = "Update";
 }
-<h1> Update Role</h1>
-<hr />
-<form method="post" asp-action="Update" class="mt-4">
 
-    <input asp-for="Id" class="form-control" hidden/>
+<div class="container mt-5 text-center">
+    <!-- Added text-center for centering -->
+    <h1 style="font-size: 4rem; color: darkblue; text-shadow: 2px 2px 4px rgba(0, 123, 255, 0.7);">Update Role</h1>
+    <hr style="border-top: 2px solid #007bff; width: 50%; margin: 20px auto;" />
 
-     <div class="form-group mt-2">
+    <form method="post" asp-action="Update" class="mt-4 d-flex flex-column align-items-center">
+        <!-- Added d-flex and align-items-center for centering -->
+        <input asp-for="Id" class="form-control" hidden />
 
-        <label asp-for="Name" class="form-control"></label>
-        
-        <input asp-for="Name" class="form-control"/>
-        
-        <div class="input-group mt-2 justify-content-center">
-        
-         <button type="submit" class="btn btn-success m-2">Edit</button>
-
-         <a class="btn btn-secondary m-2" asp-action="Index">Back to index</a>
- 
+        <div class="form-group mt-3">
+            <label asp-for="Name" class="col-form-label font-weight-bold" style="font-size: 1.5rem; color: darkblue;"></label>
+            <input asp-for="Name" class="form-control" style="width: 100%; max-width: 400px; border: 1px solid #007bff; box-shadow: none; border-radius: 5px; padding: 12px; font-size: 1.2rem;" />
         </div>
 
-    </div>
+        <div class="input-group mt-4 justify-content-center">
+            <button type="submit" class="btn btn-success m-2" style="font-weight: 600; font-size: 1rem; padding: 6px 12px;">Edit</button> <!-- Reduced padding and font size -->
+            <a class="btn btn-secondary m-2" asp-action="Index" style="font-weight: 600; font-size: 1rem; padding: 6px 12px;">Back to index</a> <!-- Reduced padding and font size -->
+        </div>
+    </form>
+</div>
 
-</form>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+<!-- Custom Styles -->
+<style>
+    body {
+        font-family: 'Arial', sans-serif; /* Change the font style */
+        background-color: #f0f4f8; /* Light background color */
+    }
+
+    .form-control {
+        border: 1px solid #007bff; /* Blue border */
+        border-radius: 5px; /* Rounded corners */
+        transition: border-color 0.3s; /* Transition effect */
+        font-size: 1.2rem; /* Larger font size for inputs */
+        padding: 12px; /* More padding for inputs */
+    }
+
+        .form-control:focus {
+            border-color: #0056b3; /* Darker blue when focused */
+            outline: none; /* Remove outline */
+        }
+
+    .btn-success {
+        background-color: #28a745; /* Green for edit */
+        border-color: #28a745;
+        color: white; /* White text color */
+        font-size: 1rem; /* Smaller button text */
+        padding: 6px 12px; /* Smaller padding */
+    }
+
+        .btn-success:hover {
+            background-color: #218838; /* Darker green on hover */
+        }
+
+    .btn-secondary {
+        background-color: #6c757d; /* Gray for back button */
+        border-color: #6c757d;
+        color: white; /* White text color */
+        font-size: 1rem; /* Smaller button text */
+        padding: 6px 12px; /* Smaller padding */
+    }
+
+        .btn-secondary:hover {
+            background-color: #5a6268; /* Darker gray on hover */
+        }
+</style>
