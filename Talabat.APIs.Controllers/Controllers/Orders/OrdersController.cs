@@ -8,6 +8,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using Talabat.APIs.Controllers.Base;
+using Talabat.Core.Application.Abstraction.Models.Auth;
 using Talabat.Core.Application.Abstraction.Models.Orders;
 using Talabat.Core.Application.Abstraction.Services;
 
@@ -42,6 +43,14 @@ namespace Talabat.APIs.Controllers.Controllers.Orders
         public async Task<ActionResult<IEnumerable<DeliveryMethodDto>>> GetDeliveryMethods()
         {
             var result = await serviceManager.OrderService.GetDeliveryMethodsAsync();
+            return Ok(result);
+        }
+
+        [Authorize]
+        [HttpGet] 
+        public async Task<ActionResult<UserDto>> GetCurrentUser()
+        {
+            var result = await serviceManager.AuthServices.GetCurrentUser(User);
             return Ok(result);
         }
 

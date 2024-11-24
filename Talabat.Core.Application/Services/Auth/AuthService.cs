@@ -54,7 +54,18 @@ namespace Talabat.Core.Application.Services.Auth
 
 
         }
-
+        public async Task<UserDto> GetCurrentUser(ClaimsPrincipal claimsPrincipal)
+        {
+            var email = claimsPrincipal.FindFirstValue(ClaimTypes.Email);
+            var user = await _userManager.FindByEmailAsync(email!);
+            return new UserDto()
+            {
+                Id = user!.Id,
+                Email = user.Email!,
+                DisplayName = user.DisplayName,
+                Token = await GenerateTokenAsync(user)
+            };
+        }
         public async Task<UserDto> RegisterAsync(RegisterDto model)
         {
             var user = new ApplicationUser()
