@@ -16,7 +16,8 @@ namespace Talabat.Infrastructure.Persistence._Data.Config.Orders
         {
             base.Configure(builder);
             builder.OwnsOne(item => item.Product, product => product.WithOwner());
-            builder.Property(item => item.Price).HasColumnType("decimal(8, 2)");
+            builder.Property(item => item.Price)
+                .HasColumnType("decimal(8,2)");
         }
     }
 }

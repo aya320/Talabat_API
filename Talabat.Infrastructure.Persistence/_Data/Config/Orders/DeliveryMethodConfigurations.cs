@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 using Talabat.Core.Domain.Entities.Orders;
@@ -15,7 +16,13 @@ namespace Talabat.Infrastructure.Persistence._Data.Config.Orders
         public override void Configure(EntityTypeBuilder<DeliveryMethod> builder)
         {
             base.Configure(builder);
-            builder.Property(method => method.Cost).HasColumnType("decimal(8,2)");
+            builder.Property(method => method.Cost)
+                .HasColumnType("decimal(8,2)");
+            builder.Property(method => method.Cost)
+                .HasColumnType("decimal(8,2)");
+
+
+
         }
     }
 }
