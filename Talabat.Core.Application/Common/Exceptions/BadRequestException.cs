@@ -8,6 +8,12 @@ namespace Talabat.Core.Application.Common.Exceptions
 {
 	public class BadRequestException : ApplicationException
 	{
-		public BadRequestException(string message) : base(message) { }
-	}
+        public IEnumerable<string> Errors { get; set; } = Enumerable.Empty<string>();
+        public BadRequestException(string? message = "Bad Request", IEnumerable<string>? errors = null)
+            : base(message)
+        {
+            if (errors != null)
+                Errors = errors;
+        }
+    }
 }
