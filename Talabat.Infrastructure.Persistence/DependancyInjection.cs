@@ -12,6 +12,7 @@ using Talabat.Core.Domain.Contracts.Persistence;
 using Talabat.Core.Domain.Contracts.Persistence.DbInitializer;
 using Talabat.Core.Domain.Entities.Identity;
 using Talabat.Infrastructure.Persistence._Data;
+using Talabat.Infrastructure.Persistence._Data.Interceptors;
 using Talabat.Infrastructure.Persistence._Identity;
 using Talabat.Infrastructure.Persistence.Data;
 using Talabat.Infrastructure.Persistence.Data.Interceptors;
@@ -23,14 +24,18 @@ namespace Talabat.Infrastructure.Persistence
 	{
 		public static IServiceCollection AddPersistenceServices(this IServiceCollection services ,IConfiguration Configuration)
 		{
-			#region StoreContext
-			services.AddDbContext<StoreDbContext>((options) =>
-			{
-				options.UseLazyLoadingProxies().UseSqlServer(Configuration.GetConnectionString("StoreContext"));
+            #region StoreContext
+            services.AddDbContext<StoreDbContext>((ServiceProvider, optionsBuilder) =>
+            {
+                optionsBuilder
+                .UseLazyLoadingProxies()
+                .UseSqlServer(Configuration.GetConnectionString("StoreContext"))
+                .AddInterceptors(ServiceProvider.GetRequiredService<AuditInterceptor>());
 
-			});
-			//services.AddScoped<IStoreContextInitializer, StoreContextInitializer>();
-			services.AddScoped(typeof(IStoreInitializer), typeof(StoreContextInitializer));
+
+            });
+            //services.AddScoped<IStoreContextInitializer, StoreContextInitializer>();
+            services.AddScoped(typeof(IStoreInitializer), typeof(StoreContextInitializer));
 
 			//services.AddScoped(typeof(ISaveChangesInterceptor), typeof(CustomSaveChangesInterceptors));
             #endregion
@@ -48,8 +53,8 @@ namespace Talabat.Infrastructure.Persistence
             //services.AddIdentityCore<ApplicationUser>(identityOptions =>
             //{
             //    identityOptions
-			//});
-
+            //});
+            services.AddScoped(typeof(AuditInterceptor));
 
 
             return services;
