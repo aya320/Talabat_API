@@ -32,7 +32,7 @@ namespace Talabat.Infrastructure.Persistence
 			//services.AddScoped<IStoreContextInitializer, StoreContextInitializer>();
 			services.AddScoped(typeof(IStoreInitializer), typeof(StoreContextInitializer));
 
-			services.AddScoped(typeof(ISaveChangesInterceptor), typeof(CustomSaveChangesInterceptors));
+			//services.AddScoped(typeof(ISaveChangesInterceptor), typeof(CustomSaveChangesInterceptors));
             #endregion
 
             #region IdentityContext
