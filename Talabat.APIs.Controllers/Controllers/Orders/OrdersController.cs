@@ -62,5 +62,13 @@ namespace Talabat.APIs.Controllers.Controllers.Orders
             return Ok(result);
         }
 
+        [Authorize]
+        [HttpPut("address")]//PUT: /api/account/address
+        public async Task<ActionResult<AddressDto>> UpdateUserAddress(AddressDto address)
+        {
+            var result = await serviceManager.AuthServices.UpdateUserAddress(User, address);
+            return Ok(result);
+        }
+
     }
 }

@@ -59,12 +59,23 @@ namespace Talabat.Core.Application.Services.Auth
         }
 
 
-        public async Task<AddressDto> GetUserAddress(ClaimsPrincipal claimsPrincipal)
+        public async Task<AddressDto?> GetUserAddress(ClaimsPrincipal claimsPrincipal)
         {
             var email = claimsPrincipal?.FindFirstValue(ClaimTypes.Email);
             var user = await _userManager.FindUserWithAddress(claimsPrincipal!);
             var address = mapper.Map<AddressDto>(user!.Address);
             return address;
+        }
+        public async Task<AddressDto> UpdateUserAddress(ClaimsPrincipal claimsPrincipal, AddressDto addressDto)
+        {
+            var User = await _userManager.FindUserWithAddress(claimsPrincipal!);
+            var updateAddress = mapper.Map<Address>(addressDto);
+            if (User?.Address is not null)
+                updateAddress.Id = User.Address.Id;
+            User!.Address = updateAddress;
+            var result = await _userManager.UpdateAsync(User);
+            if (!result.Succeeded) throw new BadRequestException(result.Errors.Select(error => error.Description).Aggregate((X, Y) => $"{X},{Y}"));
+            return addressDto;
         }
         public async Task<UserDto> GetCurrentUser(ClaimsPrincipal claimsPrincipal)
         {
