@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -11,14 +12,16 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using Talabat.Core.Application.Abstraction.Models.Auth;
+using Talabat.Core.Application.Abstraction.Models.Orders;
 using Talabat.Core.Application.Abstraction.Services.Auth;
 using Talabat.Core.Application.Common.Exceptions;
+using Talabat.Core.Application.Extensions;
 using Talabat.Core.Domain.Entities.Identity;
 
 
 namespace Talabat.Core.Application.Services.Auth
 {
-    public class AuthService(UserManager<ApplicationUser> _userManager ,SignInManager<ApplicationUser> _signInManager ,IOptions<JwtSetting> jwtSetting) : IAuthServices
+    public class AuthService(UserManager<ApplicationUser> _userManager ,SignInManager<ApplicationUser> _signInManager ,IOptions<JwtSetting> jwtSetting, IMapper mapper) : IAuthServices
     {
         private readonly JwtSetting _jwtSetting=jwtSetting.Value;
         public async Task<UserDto> LoginAsync(LoginDto model)
@@ -53,6 +56,15 @@ namespace Talabat.Core.Application.Services.Auth
 
 
 
+        }
+
+
+        public async Task<AddressDto> GetUserAddress(ClaimsPrincipal claimsPrincipal)
+        {
+            var email = claimsPrincipal?.FindFirstValue(ClaimTypes.Email);
+            var user = await _userManager.FindUserWithAddress(claimsPrincipal!);
+            var address = mapper.Map<AddressDto>(user!.Address);
+            return address;
         }
         public async Task<UserDto> GetCurrentUser(ClaimsPrincipal claimsPrincipal)
         {

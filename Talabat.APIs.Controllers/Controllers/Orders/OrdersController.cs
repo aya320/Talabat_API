@@ -54,5 +54,13 @@ namespace Talabat.APIs.Controllers.Controllers.Orders
             return Ok(result);
         }
 
+        [Authorize]
+        [HttpGet("address")] //GET: //api/account/address
+        public async Task<ActionResult<AddressDto>> GetUserAddress()
+        {
+            var result = await serviceManager.AuthServices.GetUserAddress(User);
+            return Ok(result);
+        }
+
     }
 }

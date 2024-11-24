@@ -10,6 +10,8 @@ using Talabat.Core.Application.Abstraction.Models.Products;
 using Talabat.Core.Domain.Entities.Basket;
 using Talabat.Core.Domain.Entities.Orders;
 using Talabat.Core.Domain.Entities.Products;
+using UserAddress = Talabat.Core.Domain.Entities.Identity.Address;
+using OrderAddress = Talabat.Core.Domain.Entities.Orders.Address;
 
 namespace Talabat.Core.Application.Mapping
 {
@@ -36,9 +38,9 @@ namespace Talabat.Core.Application.Mapping
                 .ForMember(dest => dest.ProductId, options => options.MapFrom(src => src.Product.ProductId))
                 .ForMember(dest => dest.ProductName, options => options.MapFrom(src => src.Product.ProductName))
                 .ForMember(dest => dest.PictureUrl, options => options.MapFrom<OrderItemPictureUrlResolver>());
-            CreateMap<Address, AddressDto>();
+            CreateMap<OrderAddress, AddressDto>().ReverseMap();
             CreateMap<DeliveryMethod, DeliveryMethodDto>();
-
+            CreateMap<UserAddress, AddressDto>();
 
 
 
