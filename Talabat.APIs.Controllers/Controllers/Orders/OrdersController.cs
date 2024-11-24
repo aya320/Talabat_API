@@ -55,7 +55,7 @@ namespace Talabat.APIs.Controllers.Controllers.Orders
         }
 
         [Authorize]
-        [HttpGet("address")] //GET: //api/account/address
+        [HttpGet("address")] 
         public async Task<ActionResult<AddressDto>> GetUserAddress()
         {
             var result = await serviceManager.AuthServices.GetUserAddress(User);
@@ -63,12 +63,20 @@ namespace Talabat.APIs.Controllers.Controllers.Orders
         }
 
         [Authorize]
-        [HttpPut("address")]//PUT: /api/account/address
+        [HttpPut("address")]
         public async Task<ActionResult<AddressDto>> UpdateUserAddress(AddressDto address)
         {
             var result = await serviceManager.AuthServices.UpdateUserAddress(User, address);
             return Ok(result);
         }
+
+
+        [HttpGet("emailexists")] 
+        public async Task<ActionResult<bool>> CheckEmailExists(string email)
+        {
+            return Ok(await serviceManager.AuthServices.EmailExists(email!));
+        }
+
 
     }
 }

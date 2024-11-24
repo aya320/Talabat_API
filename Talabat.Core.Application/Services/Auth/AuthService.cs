@@ -147,5 +147,10 @@ namespace Talabat.Core.Application.Services.Auth
                   
             return new JwtSecurityTokenHandler().WriteToken(tokenobj);
         }
+
+        public async Task<bool> EmailExists(string email)
+        {
+            return await _userManager.FindByEmailAsync(email) is not null;
+        }
     }
 }
